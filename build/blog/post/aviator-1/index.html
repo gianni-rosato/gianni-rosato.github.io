@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<html>
+    
+    <head>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <title>
+Aviator hits 1.0
+</title>
+
+        <link href="/static/favicon.ico" rel="icon">
+        <link href="/static/css/reset.css" rel="stylesheet">
+        <link href="/static/css/main.css" rel="stylesheet">
+
+    </head>
+
+    <body>
+            
+<link href="/static/css/markdown.css" rel="stylesheet">
+
+<div class="center">
+    <div class="post">
+        <div class="title" style="display: inline-grid;">Aviator hits 1.0</div>
+        <a class="back" href="/blog/">back</a>
+        <div class="date">Feb 8, 2023</div>
+        
+        <a class="tag" href="/blog/tag/aviator/">aviator</a>
+        
+        <a class="tag" href="/blog/tag/projects/">projects</a>
+        
+    </div>
+    <h2>What is Aviator?</h2>
+<h3>Manifesto</h3>
+<p><a href="https://github.com/gianni-rosato/aviator/">Aviator</a> was designed to make AV1 encoding accessible to the average person, but with the intention to teach someone who is a total beginner the ins &amp; outs of encoding AV1 videos. I don't need to make the pitch for the open source video codec AV1 - you can find that <a href="https://wikiless.org/wiki/AV1">here</a> - but currently I believe a large issue barring passionate interest in AV1 is how hard it is getting started. There are tools out there that make it easy to use the SVT-AV1 encoder with a GUI, but I think there's a lack of other alternatives that are more flexible and use cutting-edge technology while remaining easy to understand (especially as it pertains to Linux where many are familiar with the command line &amp; don't see the need for a GUI). Enter Aviator.</p>
+<h2>How does it work?</h2>
+<h3>rav1e + av1an</h3>
+<p>Behind the scenes, Aviator uses the Rust-based <a href="https://github.com/BlueSwordM/rav1e">rav1e</a> encoder which has seen decent increases in speed recently and is improving more every day. We decided to use rav1e in order to give users a memory-safe AV1 encoder implementation that prioritizes visual quality &amp; 'just works' for the most part. Specifically, we are using BlueSwordM's fork which has been tuned to improve visual quality. Alongside rav1e, we are using a custom [av1an]https://github.com/natesales/Av1an fork to split videos into multiple chunks that can be encoded in parallel to increase speed &amp; provide more options to the user. av1an also allows us to use chroma noise with our grain synthesis option which is discussed two sections down.</p>
+<p>We've configured av1an to spawn chunks automatically, which it does based on your CPU core count &amp; RAM quantity. Each worker is allocated one thread to account for systems that may not have multithreading. This default provides a usable balance between not aggressively hogging system resources &amp; still performing well. That being said, AV1 encoding is heavy and will tax your system.</p>
+<h3>Video</h3>
+<p>The first screen is unassuming, with sane defaults that respect the fact that a user might not know exactly what they are messing with right out of the box. Helpful tooltips are provided upon hovering over almost anything, with detailed descriptions of each function.</p>
+<p><img alt="Aviator's video screen" src="/static/images/aviator_video.webp" /></p>
+<p>Resolution will match the video source, &amp; otherwise defaults to 1536x864. rav1e's quantizer is set to default to 100 internally, but I believe 80 is a better option for the sake of providing better quality so that is what we use as a default. Speed 6 is a bit on the faster side for my taste, but not cripplingly slow on most systems. Grain synthesis is disabled by default, as it is not always desirable.</p>
+<h3>Grain Synthesis</h3>
+<p>AV1 provides a unique feature in the form of grain synthesis, which has largely been reserved for use in the command line for those who know its benefits. Grain synthesis aims to provide natural film grain to a video without hurting compression efficiency by removing grain from the source &amp; reapplying it at decode time as a filter. As explained in the in-app tooltip, film grain levels are equivalent to ISO noise from a camera. 1 would be ISO 100, 24 would be ISO 2400, continuing up to 64. Because of av1an, we are also able to apply this noise as chroma noise which increases its realism.</p>
+<h3>Audio</h3>
+<p>The audio screen provides more sane defaults; these include compression via the highly efficient &amp; open source Opus codec, an option to downmix the output to stereo from a larger number of channels, and a toggle for variable bit rate.</p>
+<p><img alt="Aviator's audio screen" src="/static/images/aviator_audio.webp" /></p>
+<p>By default, the audio bitrate will be pulled from the source. If this isn't detected, it will default to 48kbps which is admittedly rather low but ultimately not something I've heard many complaints about. I think it provides a reasonable level of quality for more general applications, like screen recordings or smartphone videos. Downmixing to stereo uses ffmpeg's default <code>-ac 2</code> flag which I've found to be decent and reliable despite discarding the subwoofer channel(s).</p>
+<h3>Output</h3>
+<p>The output screen has a file selector with two container options that are clearly explained with a tooltip, and a big blue 'Encode' button that eagerly invites you to start encoding.</p>
+<p><img alt="Aviator's output screen" src="/static/images/aviator_output.webp" /></p>
+<p>Upon pressing the blue button, the progress bar will indicate to you the status of the encode alongside a percentage.</p>
+<p><img alt="Aviator's encoding screen" src="/static/images/aviator_encoding.webp" /></p>
+<p>Eventually, you will get a notification when the encode is complete &amp; the progress bar will reflect the status of your encode with a message just in case you have Do Not Disturb on or missed the notification by accident. If the av1an process does not complete successfully or you manually halt your encode with the Stop Encode button, you will be met with a different notification that the status of the progress bar's text will math.</p>
+<h2>That's great, but I'm on Windows</h2>
+<p>Well, I'm sorry for you, and you should reconsider your choice of operating system. That being said, there is a great Windows AV1 encoding GUI called <a href="https://github.com/n00mkrad/nmkoder">nmkoder</a> that you should definitely try out.</p>
+<h2>You're missing feature X, Y, Z</h2>
+<p>Right now, I'm going to let this release fester for a bit before diving back into development. I would still love to see your suggestions for improvement over at the <a href="https://github.com/gianni-rosato/aviator/">github page</a> where you can put in issues for whatever you'd like to see us do in the future.</p>
+<p>Regarding hardware encoding:</p>
+<p><img alt="Aviator's output screen" src="/static/images/compression_comparison.svg" /></p>
+<p>I did my <a href="https://docs.google.com/spreadsheets/d/1fuKqYy7ZL28349nGs4DXwQGWcr5Cx2-I-ND6Bec6k0A/edit?usp=sharing">research</a>. There's a time and a place.</p>
+<h2>Special Thanks</h2>
+<p>Many thanks to <a href="https://github.com/natesales">Nate</a> for walking me through development since I began learning python as my first real language a couple weeks ago, and thanks to the people who are a part of the AV1 community for their passion toward multimedia codecs that keeps our videos crispy, our storage unconstrained, &amp; our CPUs toasty. Particular thanks to <a href="https://github.com/BlueSwordM">Blue</a> &amp; <a href="https://github.com/master-of-zen">MasterOfZen</a> for their tools that I use in &amp; out of this project and are indispensible to the community.</p>
+<p>Enjoy Aviator, happy flying! ✈️</p>
+<p><a href="https://disobey.net/@gianni">Mastodon</a> | <a href="https://matrix.to/#/@computerbustr:matrix.org">Matrix</a> | <a href="https://radixproject.org/">The Radix Project</a></p>
+</div>
+
+    </body>
+
+</html>
