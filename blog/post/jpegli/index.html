@@ -37,7 +37,7 @@ Mini Image Codec Comparison; jpegli
         
     </div>
     <h2>Why?</h2>
-<p>JPEG is a really neat codec. It has served us super well for a number of years. JPEG's ingeniously simple design that divides an image into 8x8 pixel blocks, separates chroma (color) from luma (luminance) into the YCbCr color space (you can also use RGB), applies the DCT, quantizes the DCT coefficients, &amp; passes the data on to the decoder makes JPEG images very easy to read and write nowadays. They look good, too; in fact, they are looking better and better as their encoding implementations (somehow) continue to improve; MozJPEG improved quality relative to libjpeg-turbo &amp; older implementations, especially at low to medium fidelity; jpegli promises to further improve over MozJPEG, potentially across the board. JPEG also still has features that many modern codecs don't have that are very useful, like support for progressive decode which allows parts of the image to be sent as the image data is being transferred. <a href="https://blurha.sh/">Blurhashes</a> are very popular for their ability to send some data before the entire image, and progressive decode enhances this even further. WebP, HEIC, &amp; AVIF don't support progressive decode*, although JPEG-XL does. Outside of features, JPEG became supposedly became competitive with WebP in coding efficiency when MozJPEG released. This is contrary to the narritive that WebP is <a href="https://developers.google.com/speed/webp/docs/webp_study">25%-34% smaller</a> than JPEG (which, if you read the article, isn't the conclusion here; Google specifically says "We observed that the average WebP file size is 25%-34% smaller compared to JPEG file size at equivalent SSIM index" which is important because SSIM is a rather outdated metric at this point &amp; largely isn't indicitive of perceptual quality. They also tested libjpeg, not mozjpeg). Could jpegli be so efficient that it results in WebP being <em>entirely</em> outcompeted by a codec that's nearly <em>twenty years</em> older?</p>
+<p>JPEG is a really neat codec. It has served us super well for a number of years. JPEG's ingeniously simple design that divides an image into 8x8 pixel blocks, separates chroma (color) from luma (luminance) into the YCbCr color space (you can also use RGB), applies the DCT, quantizes the DCT coefficients, &amp; passes the data on to the decoder makes JPEG images very easy to read and write nowadays. They look good, too; in fact, they are looking better and better as their encoding implementations (somehow) continue to improve; MozJPEG improved quality relative to libjpeg-turbo &amp; older implementations, especially at low to medium fidelity; jpegli promises to further improve over MozJPEG, potentially across the board. JPEG also still has features that many modern codecs don't have that are very useful, like support for progressive decode which allows parts of the image to be sent as the image data is being transferred. <a href="https://blurha.sh/">Blurhashes</a> are very popular for their ability to send some data before the entire image, and progressive decode enhances this even further. WebP, HEIC, &amp; AVIF don't support progressive decode*, although JPEG-XL does. Outside of features, JPEG supposedly became competitive with WebP in coding efficiency when MozJPEG released. This is contrary to the narrative that WebP is <a href="https://developers.google.com/speed/webp/docs/webp_study">25%-34% smaller</a> than JPEG (which, if you read the article, isn't the conclusion here; Google specifically says "We observed that the average WebP file size is 25%-34% smaller compared to JPEG file size at equivalent SSIM index" which is important because SSIM is a rather outdated metric at this point &amp; largely isn't indicative of perceptual quality. They also tested libjpeg, not mozjpeg). Could jpegli be so efficient that it results in WebP being <em>entirely</em> outcompeted by a codec that's nearly <em>twenty years</em> older?</p>
 <h2>How Jpegli Works</h2>
 <p>Jpegli's gains are largely due to better adaptive quantization based on the heuristics used by JPEG-XL. Projects like <a href="https://github.com/google/guetzli">Guetzli</a> have achieved better JPEG compression through similar means, but have been <em>really</em> slow to work with. It is outlined in the readme for Guetzli that it is not fast:</p>
 <blockquote>
@@ -62,7 +62,7 @@ Mini Image Codec Comparison; jpegli
 <li><code>cjxl input output.jxl -q [quality] -e 8</code></li>
 <li><code>avifenc -c aom -s 4 -j 8 -d 10 -y 444 --min 1 --max 63 -a end-usage=q -a cq-level=[quality] -a tune=ssim [input] [output.avif]</code></li>
 </ul>
-<p>Here's some speed benchmarks for each, using the parameters above. Parameter modifications are disclosed. Benchmarked with <code>hyperfine</code>, tested on the first image in the corpus:</p>
+<p>Here are some speed benchmarks for each, using the parameters above. Parameter modifications are disclosed. Benchmarked with <code>hyperfine</code>, tested on the first image in the corpus:</p>
 <p><code>hyperfine --warmup 2 --runs 20 "command"</code></p>
 <p><code>inxi -v
 CPU: 16-core (8-mt/8-st) 13th Gen Intel Core i7-13700K (-MST AMCP-)
@@ -128,7 +128,7 @@ Shell: Zsh inxi: 3.3.27</code></p>
 </li>
 </ul>
 <p><img alt="test1_results" src="/static/images/jpegli_speeds.svg" /></p>
-<p>Using all available threads with avifenc would routinely produce slightly worse results, and Hyperfine threw up an error every time suggesting some results were appearing to be outliers. This is why I lowered the worker count to 8 for the quality benchmark. I found this anomalous behavior interesting as it highlights avifenc's trouble with scaling that stems from issues with the AVIF image format. I would wager a guess that this scaling issue is because of AVIF's use of certain intra-frame coding techniques like directional prediction that share data between blocks, theoretically improving coding efficiency but reducing paralellization &amp; worsening generation loss. If I recall correctly, JPEG-XL specifically avoided intra coding techniques like these in order to paralellize effectively (and improve resilience to generation loss).  </p>
+<p>Using all available threads with avifenc would routinely produce slightly worse results, and Hyperfine threw up an error every time suggesting some results were appearing to be outliers. This is why I lowered the worker count to 8 for the quality benchmark. I found this anomalous behavior interesting as it highlights avifenc's trouble with scaling that stems from issues with the AVIF image format. I would wager a guess that this scaling issue is because of AVIF's use of certain intra-frame coding techniques like directional prediction that share data between blocks, theoretically improving coding efficiency but reducing parallelization &amp; worsening generation loss. If I recall correctly, JPEG-XL specifically avoided intra coding techniques like these in order to parallelize effectively (and improve resilience to generation loss).  </p>
 <h2>Photographic Images</h2>
 <p>Here are some lossy previews of the four images that were tested. <em>These will load properly on a browser supporting JXL, and on other browsers will be transcoded to PNG.</em></p>
 <p><img alt="test1" src="/static/images/jpegli_test1.jxl" /></p>
@@ -137,7 +137,7 @@ Shell: Zsh inxi: 3.3.27</code></p>
 <p><img alt="test4" src="/static/images/jpegli_test4.jxl" /></p>
 <p>And, here are the test results for each image! It is worth disclosing that in my analyses, I prefer to look at the 60-70+ range that I consider most useful. Others may disagree, so please take my rankings for what they are: my opinions.</p>
 <p><img alt="test1_results" src="/static/images/jpegli_test1.svg" /></p>
-<p>The first image favors jpegli quite a bit here over mozjpeg. The medium-high fidelity range from 60-80 is kind of a tie between all three chroma subsampling modes &amp; WebP, while mozjpeg lags behind. It is worth noting that WebP's overall quality cieling is lower here, with a max score of around 90.</p>
+<p>The first image favors jpegli quite a bit here over mozjpeg. The medium-high fidelity range from 60-80 is kind of a tie between all three chroma subsampling modes &amp; WebP, while mozjpeg lags behind. It is worth noting that WebP's overall quality ceiling is lower here, with a max score of around 90.</p>
 <p>My picks:</p>
 <ol>
 <li>JXL</li>
@@ -149,7 +149,7 @@ Shell: Zsh inxi: 3.3.27</code></p>
 <li>mozjpeg</li>
 </ol>
 <p><img alt="test2_results" src="/static/images/jpegli_test2.svg" /></p>
-<p>The simple lines and large sections of color in this image remind me of a nonphotographic image, and therefore favor AVIF &amp; WebP which are derived from video codecs (AV1 &amp; VP8 respectively). Although it looks like 4:4:4 jpegli does well at scores &gt;95, that medium-high fidelity range is dominated by mozjpeg. WebP's quality cieling is really low here, and it appears incapable of hitting a score of 90 which is where SSIMULACRA2.1 starts to consider an image perceptually lossless.</p>
+<p>The simple lines and large sections of color in this image remind me of a nonphotographic image, and therefore favor AVIF &amp; WebP which are derived from video codecs (AV1 &amp; VP8 respectively). Although it looks like 4:4:4 jpegli does well at scores &gt;95, that medium-high fidelity range is dominated by mozjpeg. WebP's quality ceiling is really low here, and it appears incapable of hitting a score of 90 which is where SSIMULACRA2.1 starts to consider an image perceptually lossless.</p>
 <p>My picks:</p>
 <ol>
 <li>AVIF</li>
@@ -161,7 +161,7 @@ Shell: Zsh inxi: 3.3.27</code></p>
 <li>jpegli 4:2:2</li>
 </ol>
 <p><img alt="test3_results" src="/static/images/jpegli_test3.svg" /></p>
-<p>This one looks like a toss up the whole time between jpegli, mozjpeg, and webp, with AVIF pulling ahead &amp; JXL pulling even further ahead. Jpegli 4:4:4 is consistent all the way across, while mozjpeg starts to drop off at higher fidelity &amp; WebP sadly hits its quality cieling just before cresting the 90 mark while still maintaining strong coding efficiency throughout the rest of the quality scale where it is present.</p>
+<p>This one looks like a toss-up the whole time between jpegli, mozjpeg, and webp, with AVIF pulling ahead &amp; JXL pulling even further ahead. Jpegli 4:4:4 is consistent all the way across, while mozjpeg starts to drop off at higher fidelity &amp; WebP sadly hits its quality ceiling just before cresting the 90 mark while still maintaining strong coding efficiency throughout the rest of the quality scale where it is present.</p>
 <p>My picks:</p>
 <ol>
 <li>JXL</li>
