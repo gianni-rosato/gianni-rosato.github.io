@@ -127,16 +127,16 @@ Shell: Zsh inxi: 3.3.27</code></p>
 </blockquote>
 </li>
 </ul>
-<p><img alt="test1_results" src="/static/images/jpegli_speeds.svg" /></p>
+<p><img alt="test1_results" src="/static/images/jpegli_speeds.svg" loading="lazy"/></p>
 <p>Using all available threads with avifenc would routinely produce slightly worse results, and Hyperfine threw up an error every time suggesting some results were appearing to be outliers. This is why I lowered the worker count to 8 for the quality benchmark. I found this anomalous behavior interesting as it highlights avifenc's trouble with scaling that stems from issues with the AVIF image format. I would wager a guess that this scaling issue is because of AVIF's use of certain intra-frame coding techniques like directional prediction that share data between blocks, theoretically improving coding efficiency but reducing parallelization &amp; worsening generation loss. If I recall correctly, JPEG-XL specifically avoided intra coding techniques like these in order to parallelize effectively (and improve resilience to generation loss).  </p>
 <h2>Photographic Images</h2>
 <p>Here are some lossy previews of the four images that were tested. <em>These will load properly on a browser supporting JXL, and on other browsers will be transcoded to PNG.</em></p>
-<p><img alt="test1" src="/static/images/jpegli_test1.jxl" /></p>
-<p><img alt="test2" src="/static/images/jpegli_test2.jxl" /></p>
-<p><img alt="test3" src="/static/images/jpegli_test3.jxl" /></p>
-<p><img alt="test4" src="/static/images/jpegli_test4.jxl" /></p>
+<p><img alt="test1" src="/static/images/jpegli_test1.jxl" loading="lazy"/></p>
+<p><img alt="test2" src="/static/images/jpegli_test2.jxl" loading="lazy"/></p>
+<p><img alt="test3" src="/static/images/jpegli_test3.jxl" loading="lazy"/></p>
+<p><img alt="test4" src="/static/images/jpegli_test4.jxl" loading="lazy"/></p>
 <p>And, here are the test results for each image! It is worth disclosing that in my analyses, I prefer to look at the 60-70+ range that I consider most useful. Others may disagree, so please take my rankings for what they are: my opinions.</p>
-<p><img alt="test1_results" src="/static/images/jpegli_test1.svg" /></p>
+<p><img alt="test1_results" src="/static/images/jpegli_test1.svg" loading="lazy"/></p>
 <p>The first image favors jpegli quite a bit here over mozjpeg. The medium-high fidelity range from 60-80 is kind of a tie between all three chroma subsampling modes &amp; WebP, while mozjpeg lags behind. It is worth noting that WebP's overall quality ceiling is lower here, with a max score of around 90.</p>
 <p>My picks:</p>
 <ol>
@@ -148,7 +148,7 @@ Shell: Zsh inxi: 3.3.27</code></p>
 <li>jpegli 4:2:2</li>
 <li>mozjpeg</li>
 </ol>
-<p><img alt="test2_results" src="/static/images/jpegli_test2.svg" /></p>
+<p><img alt="test2_results" src="/static/images/jpegli_test2.svg" loading="lazy"/></p>
 <p>The simple lines and large sections of color in this image remind me of a nonphotographic image, and therefore favor AVIF &amp; WebP which are derived from video codecs (AV1 &amp; VP8 respectively). Although it looks like 4:4:4 jpegli does well at scores &gt;95, that medium-high fidelity range is dominated by mozjpeg. WebP's quality ceiling is really low here, and it appears incapable of hitting a score of 90 which is where SSIMULACRA2.1 starts to consider an image perceptually lossless.</p>
 <p>My picks:</p>
 <ol>
@@ -160,7 +160,7 @@ Shell: Zsh inxi: 3.3.27</code></p>
 <li>jpegli 4:2:0</li>
 <li>jpegli 4:2:2</li>
 </ol>
-<p><img alt="test3_results" src="/static/images/jpegli_test3.svg" /></p>
+<p><img alt="test3_results" src="/static/images/jpegli_test3.svg" loading="lazy"/></p>
 <p>This one looks like a toss-up the whole time between jpegli, mozjpeg, and webp, with AVIF pulling ahead &amp; JXL pulling even further ahead. Jpegli 4:4:4 is consistent all the way across, while mozjpeg starts to drop off at higher fidelity &amp; WebP sadly hits its quality ceiling just before cresting the 90 mark while still maintaining strong coding efficiency throughout the rest of the quality scale where it is present.</p>
 <p>My picks:</p>
 <ol>
@@ -172,7 +172,7 @@ Shell: Zsh inxi: 3.3.27</code></p>
 <li>jpegli 4:2:0</li>
 <li>jpegli 4:2:2</li>
 </ol>
-<p><img alt="test4_results" src="/static/images/jpegli_test4.svg" /></p>
+<p><img alt="test4_results" src="/static/images/jpegli_test4.svg" loading="lazy"/></p>
 <p>This is the closest of all. I am once again disappointed that WebP is outperformed by jpegli 4:4:4 at around 83+ &amp; can't seem to score higher than a 90, while jpegli 4:4:4 &amp; mozjpeg cruise up to around 95. That extra headroom is important for photography &amp; lots of use cases outside of web delivery, which is why it is important to me that a codec is able to perform throughout the quality spectrum without bumping its head too early. Here we see AVIF &amp; JXL behaving similarly to my <a href="https://giannirosato.com/blog/post/image-comparison/">Image Codec Comparison</a> blog post, with strong low fidelity performance from AVIF &amp; better high fidelity results coming out of JXL.</p>
 <p>My picks:</p>
 <ol>
@@ -187,8 +187,8 @@ Shell: Zsh inxi: 3.3.27</code></p>
 <h2>Extrapolations</h2>
 <p>First, if you don't know what chroma subsampling is, I highly recommend you check out <a href="https://master-of-zen.xyz/yuv-vs-rgb/">Master of Zen's explainer</a>. It is a more detailed explanation, &amp; it thoroughly covers the effects of chroma subsampling.</p>
 <p>It is worth noting that I didn't try <em>every</em> mozjpeg tune here, and I have seen the SSIM &amp; MS-SSIM tunes work well compressing photographic images. I also didn't test every chroma subsampling mode that mozjpeg has to offer, and allowed mozjpeg to subsample chroma automatically - this automatic selection gives it a theoretical advantage over each <em>individual</em> jpegli chroma subsampling mode, but wouldn't allow the encoder to display its breadth of competence like jpegli here. In the end, I wouldn't call this a loss for mozjpeg anyhow - it is clearly not obsolete in any case, and the only scenario in which it clearly lost was the first image test. The overall average &amp; three image average results make a compelling case for mozjpeg overall.</p>
-<p><img alt="avg_results" src="/static/images/jpegli_avg.svg" /></p>
-<p><img alt="someavg_results" src="/static/images/jpegli_someavg.svg" /></p>
+<p><img alt="avg_results" src="/static/images/jpegli_avg.svg" loading="lazy"/></p>
+<p><img alt="someavg_results" src="/static/images/jpegli_someavg.svg" loading="lazy"/></p>
 <p>While four images isn't anything significant to extrapolate any real conclusions about these encoders, we can see some clear differences between the different encoders. In particular, I think the notion that WebP is noticeably more efficient than JPEG is almost entirely negated by modern JPEG encoders like mozjpeg &amp; now jpegli. WebP is especially weak outside of the Web, where higher fidelity is more precious.</p>
 <p>Stepping back from my personal preference for high fidelity, it is very impressive how consistently well jpegli 4:2:0 is able to do when the target is &lt;50-60. This is usually WebP's territory (ignoring AVIF &amp; JXL for a moment) relative to JPEG, but 4:2:0 jpegli is closer than mozjpeg to WebP on every image except the second one. 4:2:2 jpegli seems like it doesn't have much of a use at all.</p>
 <h2>Should I Use It?</h2>
