@@ -135,36 +135,36 @@ Benchmark 1: cjpegli test1.png --xyb -d 0.5 --chroma_subsampling=420 out_420-xyb
 <p>Time (mean ± σ):     147.8 ms ±   0.7 ms    [User: 139.8 ms, System: 7.6 ms]
  Range (min … max):   146.5 ms … 149.0 ms    20 runs</p>
 </blockquote>
-<p><img alt="speedtest_all" src="/static/images/enc_speeds_faster.svg" width=913 height=698 loading="lazy"/>  </p>
+<p><img alt="speedtest_all" src="/static/images/enc_speeds_faster.svg" width=640 loading="lazy"/>  </p>
 <h2>Photographic Images</h2>
 <p>Here are some lossy previews of the four images that were tested. <em>These will load properly on a browser supporting JXL, and on other browsers will fall back to XYB JPEG.</em></p>
 <picture>
     <source srcset="/static/images/test1-xyb.jxl" type="image/jxl">
-    <img src="/static/images/test1-xyb.jpg" alt="XYB Test 1 Image" width=1885 height=1260 loading="lazy">
+    <img src="/static/images/test1-xyb.jpg" alt="XYB Test 1 Image" width=640 loading="lazy">
 </picture>
 <picture>
     <source srcset="/static/images/test2-xyb.jxl" type="image/jxl">
-    <img src="/static/images/test2-xyb.jpg" alt="XYB Test 2 Image" width=1885 height=1260 loading="lazy">
+    <img src="/static/images/test2-xyb.jpg" alt="XYB Test 2 Image" width=640 loading="lazy">
 </picture>
 <picture>
     <source srcset="/static/images/test3-xyb.jxl" type="image/jxl">
-    <img src="/static/images/test3-xyb.jpg" alt="XYB Test 3 Image" width=1885 height=1260 loading="lazy">
+    <img src="/static/images/test3-xyb.jpg" alt="XYB Test 3 Image" width=640 loading="lazy">
 </picture>
 <picture>
     <source srcset="/static/images/test4-xyb.jxl" type="image/jxl">
-    <img src="/static/images/test4-xyb.jpg" alt="XYB Test 4 Image" width=1885 height=1260 loading="lazy">
+    <img src="/static/images/test4-xyb.jpg" alt="XYB Test 4 Image" width=640 loading="lazy">
 </picture>
 <p>Here are the test results for each image!</p>
-<p><img alt="test1_results_xyb" src="/static/images/xyb-test1.svg" width=913 height=698 loading="lazy"/></p>
+<p><img alt="test1_results_xyb" src="/static/images/xyb-test1.svg" width=640 loading="lazy"/></p>
 <p>This was an incredibly shocking first showing for XYB JPEG, outperforming other JPEGs, WebP, &amp; even AVIF at the critical high-fidelity range. There's some weirdness going on with mixing chroma subsampling &amp; XYB color for some reason, with an incredibly low quality ceiling that is hit very quickly. For 4:4:4, this is impressive to see XYB JPEG come second only to JXL.</p>
-<p><img alt="test2_results_xyb" src="/static/images/xyb-test2.svg" width=913 height=698 loading="lazy"/></p>
+<p><img alt="test2_results_xyb" src="/static/images/xyb-test2.svg" width=640 loading="lazy"/></p>
 <p>Here, once again, XYB JPEG impresses by surpassing AVIF entirely at medium &amp; higher fidelity while putting the other JPEG encoders to shame. I am floored by how well this performs, although JXL remains a better option overall.</p>
-<p><img alt="test3_results_xyb" src="/static/images/xyb-test3.svg" width=913 height=698 loading="lazy"/></p>
+<p><img alt="test3_results_xyb" src="/static/images/xyb-test3.svg" width=640 loading="lazy"/></p>
 <p>This is more what I'd expect out of AVIF, as it seems to be suffering in these other tests due to the faster preset we're using. I'm still impressed with XYB JPEG's ability to surpass WebP at 75+ SSIMU2.</p>
-<p><img alt="test4_results_xyb" src="/static/images/xyb-test4.svg" width=913 height=698 loading="lazy"/></p>
+<p><img alt="test4_results_xyb" src="/static/images/xyb-test4.svg" width=640 loading="lazy"/></p>
 <p>Pretty similar to before, XYB JPEG handily beats WebP while still being outperformed by AVIF. I'm still wowed by the fact that the <em>ancient</em> JPEG is still even reasonably competitive with AVIF, but seeing how much better JXL does throughout these tests, it is clear the modern formats still have hope.</p>
 <h2>Extrapolations</h2>
-<p><img alt="avg_xyb_results" src="/static/images/xyb_results_avg.svg" width=913 height=698 loading="lazy"/></p>
+<p><img alt="avg_xyb_results" src="/static/images/xyb_results_avg.svg" width=640 loading="lazy"/></p>
 <p>On average, seeing such a good showing from XYB JPEG has inspired me to start using the format more often. Anywhere ICC profiles are supported along with JPEG, XYB JPEG will be supported. I'm interested to see how it'd perform on a bigger dataset against higher effort JXL &amp; AVIF, but for now, I'm satisfied with its performance enough to argue for its adoption.</p>
 <p>The one snag is ICC color management support, although I've yet to run into a modern browser that doesn't pass <a href="https://cameratico.com/tools/web-browser-color-management-test/">these tests</a>. You can try it for yourself if you like, I'm not sure which browsers <em>don't</em> support ICCv2 color management, but those would not deal with XYB JPEG properly.</p>
 <p>Inspiration &amp; Sources:</p>
