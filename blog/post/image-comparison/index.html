@@ -6,7 +6,24 @@
 
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+        <title>Image Codec Comparison</title>
+        <meta name="description" content="A comprehensive comparison of popular image codecs, including JPEG, WebP, JPEG-XL, and AVIF, focusing on their performance in lossy compression for both photographic and non-photographic images.">
+        <meta name="keywords" content="image codec comparison, JPEG, WebP, JPEG-XL, AVIF, lossy compression, photographic images, non-photographic images, visual quality, file size, performance analysis">
+        <meta name="author" content="Gianni Rosato">
+        <meta name="robots" content="index, follow">
+        <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+        <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+        <meta property="og:title" content="Image Codec Comparison">
+        <meta property="og:description" content="A comprehensive comparison of popular image codecs, including JPEG, WebP, JPEG-XL, and AVIF, focusing on their performance in lossy compression for both photographic and non-photographic images.">
+        <meta property="og:type" content="article">
+        <meta property="og:url" content="https://www.giannirosato.com/blog/image-comparison">
+        <link href="/static/favicon.webp" rel="icon">
+        <link href="/static/css/reset.css" rel="stylesheet">
+        <link href="/static/css/main.css" rel="stylesheet">
+        <link href="/static/css/markdown.css" rel="stylesheet">
+        <link rel="prefetch" href="/static/js/jxl/jxl_dec.js" fetchpriority="high">
+        <link rel="prefetch" href="/static/js/jxl/jxl_dec.wasm" fetchpriority="high">
+        <script src="/static/js/jxl/jxl.min.js"></script>
         <title>
 Image Codec Comparison
 </title>
@@ -36,6 +53,7 @@ Image Codec Comparison
         <a class="tag" href="/blog/tag/jxl/">jxl</a>
         
     </div>
+    <h3> </h3><h3> </h3>
     <h2>Why?</h2>
 <p>To start things off, I have been a fan of the AVIF image format since I heard about it, not long after I started learning about the AV1 video codec in 2020. I figured the fact that it was backed by the Alliance for Open Media, was the natural successor to WebP, and was based on a rather powerful video codec that was rapidly growing in popularity was great for users &amp; organizations alike to easily understand what the technology stood for, where it came from, and what benefits it provided over the existing lossy image king, JPEG. Good codecs are open source codecs, so the fact that AVIF was open source was a big deal to me as well. It is also already <a href="https://caniuse.com/avif">widely supported</a> at the time of writing. I thought unequivocally that AVIF would be the future of images on the web when I first learned about it. I don't think I was entirely wrong, but I hadn't yet heard of JPEG-XL.</p>
 <p><a href="https://jpegxl.info/">JPEG-XL</a> (JXL for short) is an image codec by the JPEG committee (yes, <em>the</em> JPEG committee). Initially I hadn't thought much of the codec because the compression efficiency was "the same as AVIF," so I kind of wrote it off, as I'm sure many uninformed people have &amp; continue to do. Upon doing more research, my position flipped and I found myself deeply invested in the future of JXL.</p>

@@ -3,10 +3,23 @@
 <html>
     
     <head>
-
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+        <title>Lossless Data Compression</title>
+        <meta name="description" content="A comprehensive comparison and analysis of various lossless data compression algorithms, including ZIP, 7zip, XZ, Brotli, Zstandard, and ZPAQ.">
+        <meta name="keywords" content="lossless data compression, ZIP, 7zip, XZ, Brotli, Zstandard, ZPAQ, compression algorithms, performance analysis">
+        <meta name="author" content="Gianni Rosato">
+        <meta name="robots" content="index, follow">
+        <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+        <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+        <meta property="og:title" content="Lossless Data Compression">
+        <meta property="og:description" content="A comprehensive comparison and analysis of various lossless data compression algorithms, including ZIP, 7zip, XZ, Brotli, Zstandard, and ZPAQ.">
+        <meta property="og:type" content="article">
+        <meta property="og:url" content="https://www.giannirosato.com/blog/lossless-data-comp">
+        <link href="/static/favicon.webp" rel="icon">
+        <link href="/static/css/reset.css" rel="stylesheet">
+        <link href="/static/css/main.css" rel="stylesheet">
+        <link href="/static/css/markdown.css" rel="stylesheet">
         <title>
 Lossless Data Compression
 </title>
@@ -29,6 +42,7 @@ Lossless Data Compression
         <a class="tag" href="/blog/tag/projects/">projects</a>
         
     </div>
+<h3> </h3><h3> </h3>
 <h1 id="lossless-data-compression">Lossless Data Compression</h1>
 <p>While I&#39;ve covered image compression a decent amount in these sorts of blog posts, I wanted to dive into generic lossless data compression a bit more to see what this interesting realm of compression has to offer. Inspired by the many other existing lossless data compression comparisons, I wanted to approach this with visualizations similar to the ones I provide in my image codec comparisons. Because lossless data compression doesn&#39;t discard data, these graphs plot time vs. compressed size, allowing you to compare the various compression steps of lossless data compression algorithms relative to the time taken to compress/decompress.</p>
 <h1 id="methodology-algorithms">Methodology &amp; Algorithms</h1>
@@ -52,8 +66,8 @@ Lossless Data Compression
 <li>zpaq: <code>zpaq a &quot;out&quot; &quot;input&quot; -m[level]</code></li>
 </ul>
 <p>Finally, here are my system specs:</p>
-<pre><code class="lang-zsh"><span class="hljs-string">CPU:</span> <span class="hljs-number">16</span>-core (<span class="hljs-number">8</span>-mt/<span class="hljs-number">8</span>-st) <span class="hljs-number">13</span>th Gen Intel Core i7<span class="hljs-number">-13700</span>K (-MST AMCP-)
-speed<span class="hljs-regexp">/min/</span><span class="hljs-string">max:</span> <span class="hljs-number">888</span><span class="hljs-regexp">/800/</span><span class="hljs-number">5300</span>:<span class="hljs-number">5400</span>:<span class="hljs-number">4200</span> MHz <span class="hljs-string">Kernel:</span> <span class="hljs-number">6.5</span><span class="hljs-number">.5</span>-zen1<span class="hljs-number">-1</span>-zen x86_64
+<pre><code class="lang-zsh">CPU: 16-core (8-mt/8-st) 13th Gen Intel Core i7-13700K (-MST AMCP-)
+     speed/min/max: 888/800/5300:5400:4200 MHz Kernel: 6.5.5-zen1-1-zen x86_64
 </code></pre>
 <p>If you&#39;d like to do a deeper dive into my methodology, I have my script <code>compression-plotter</code> available <a href="https://github.com/gianni-rosato/compression-plotter">on GitHub</a>. Given you have all the dependencies, you are free to run it yourself to cross-reference any results you come up with against mine.</p>
 <p>I used a 1.0GB generic Wikipedia download for this test, which makes it text-specific. Now, let&#39;s dive into which algorithms I chose &amp; what they do.</p>
@@ -80,7 +94,6 @@ speed<span class="hljs-regexp">/min/</span><span class="hljs-string">max:</span>
 <h3 id="compression">Compression</h3>
 <p>Here are my compression performance results, measured in real time. This graph uses a logarithmic horizontal scale factor:</p>
 <picture>
-    <source srcset="/static/images/compression_realtime.jxl" type="image/jxl">
     <img alt="compression_realtime_results" src="/static/images/compression_realtime.svg" width=640 height=489 loading="lazy">
 </picture>
 <p><strong>My personal takeaways from this test:</strong></p>
@@ -93,7 +106,6 @@ speed<span class="hljs-regexp">/min/</span><span class="hljs-string">max:</span>
 </ul>
 <p>Here are my compression performance results, measured in <em>user + system</em> time (the time the computer uses across its resources, added up). This graph uses a logarithmic horizontal scale factor:</p>
 <picture>
-    <source srcset="/static/images/compression_usrtime.jxl" type="image/jxl">
     <img alt="compression_usrtime_results" src="/static/images/compression_usrtime.svg" width=640 height=489 loading="lazy">
 </picture>
 <p><strong>My personal takeaways from this test:</strong></p>
@@ -106,7 +118,6 @@ speed<span class="hljs-regexp">/min/</span><span class="hljs-string">max:</span>
 <h3 id="decompression">Decompression</h3>
 <p>Evaluating any of these compression standards for practical use means you must take decompression into account. Let&#39;s look at the first batch of results for real time, where I tested decompression performance for the <strong>lowest &amp; highest levels of compression effort</strong> for each standard. Once again, this graph uses a logarithmic horizontal scale factor:</p>
 <picture>
-    <source srcset="/static/images/decompression_realtime.jxl" type="image/jxl">
     <img alt="decompression_realtime_results" src="/static/images/decompression_realtime.svg" width=640 height=489 loading="lazy">
 </picture>
 <p><strong>My personal takeaways from this test:</strong></p>
@@ -120,7 +131,6 @@ speed<span class="hljs-regexp">/min/</span><span class="hljs-string">max:</span>
 </ul>
 <p>Finally, here are the user + sys time results for decompression. This should tell us a more complete story about why 7zip is so fast in real time. This graph uses a logarithmic horizontal scale factor:</p>
 <picture>
-    <source srcset="/static/images/decompression_usrtime.jxl" type="image/jxl">
     <img alt="decompression_usrtime_results" src="/static/images/decompression_usrtime.svg" width=640 height=489 loading="lazy">
 </picture>
 <p><strong>My personal takeaways from this test:</strong></p>

@@ -33,7 +33,8 @@ XYB JPEG
         <a class="tag" href="/blog/tag/jpeg/">jpeg</a>
         
     </div>
-    <h1>XYB JPEG</h1>
+<h3> </h3><h3> </h3>
+<h1>XYB JPEG</h1>
 <p>This is going to be a shorter post because I have done this kind of visual quality evaluation three times now, so if you're not sure what you're reading, please look at my <a href="https://giannirosato.com/blog/post/image-comparison/">Image Codec Comparison</a> post from March &amp; my <a href="https://giannirosato.com/blog/post/jpegli/">Mini Image Codec Comparison</a> from just last month. This may be the last one of these kinds of posts for a while unless something interesting can be wrung out of another SSIMULACRA2 plot. Maybe with comparing speeds next time?</p>
 <p>The reason I'm making this post is that I just discovered that the <code>ssimulacra2</code> binary that comes with libjxl can properly decode &amp; benchmark XYB JPEG encoded with <code>cjpegli</code> &amp; I wanted to test it for myself. The source images &amp; results are published here, but first I think it is worth explaining in greater detail what the XYB color space is.</p>
 <h2>Perceptual Color</h2>
@@ -80,56 +81,56 @@ speed/min/max: 1512/800/5400 MHz Kernel: 6.4.3-zen1-1-zen x86_64 Up: 5h 5m
 Mem: 6.95/31.12 GiB (22.3%) Storage: 6.83 TiB (2.6% used) Procs: 523
 Shell: Zsh inxi: 3.3.28</code></p>
 <p><strong>avifenc</strong> speed 8 j12 <em>182.4 kB</em></p>
-<p>% hyperfine --warmup 5 --runs 20 "avifenc -c aom -s 8 -j 12 -d 10 -y 444 --min 1 --max 63 -a end-usage=q -a cq-level=21 -a tune=ssim test1.png out.avif"
+<p><code>% hyperfine --warmup 5 --runs 20 "avifenc -c aom -s 8 -j 12 -d 10 -y 444 --min 1 --max 63 -a end-usage=q -a cq-level=21 -a tune=ssim test1.png out.avif"</code>
 Benchmark 1: avifenc -c aom -s 8 -j 12 -d 10 -y 444 --min 1 --max 63 -a end-usage=q -a cq-level=21 -a tune=ssim test1.png out.avif</p>
 <blockquote>
 <p>Time (mean ± σ):     249.9 ms ±   6.2 ms    [User: 397.2 ms, System: 19.5 ms]
  Range (min … max):   243.4 ms … 271.7 ms    20 runs</p>
 </blockquote>
 <p><strong>cjxl</strong> e6 <em>180.9 kB</em></p>
-<p>% hyperfine --warmup 5 --runs 20 "cjxl test1.png out.jxl -d 1.0 -e 6 -p -v"
+<p><code>% hyperfine --warmup 5 --runs 20 "cjxl test1.png out.jxl -d 1.0 -e 6 -p -v"</code>
 Benchmark 1: cjxl test1.png out.jxl -d 1.0 -e 6 -p -v</p>
 <blockquote>
 <p>Time (mean ± σ):     192.1 ms ±   2.3 ms    [User: 641.1 ms, System: 666.6 ms]
  Range (min … max):   188.7 ms … 199.7 ms    20 runs</p>
 </blockquote>
 <p><strong>cwebp</strong> m6 <em>177.2 kB</em></p>
-<p>% hyperfine --warmup 5 --runs 20 "cwebp -m 6 -q 90 test1.png -o out.webp"
+<p><code>% hyperfine --warmup 5 --runs 20 "cwebp -m 6 -q 90 test1.png -o out.webp"</code>
 Benchmark 1: cwebp -m 6 -q 90 test1.png -o out.webp</p>
 <blockquote>
 <p>Time (mean ± σ):     342.9 ms ±   1.0 ms    [User: 337.4 ms, System: 4.5 ms]
  Range (min … max):   341.0 ms … 344.9 ms    20 runs</p>
 </blockquote>
 <p>cjpeg (<strong>mozjpeg</strong>) <em>184.1 kB</em></p>
-<p>% hyperfine --warmup 5 --runs 20 "cjpeg -q 80 test1.png &gt; out.jpeg"
+<p><code>% hyperfine --warmup 5 --runs 20 "cjpeg -q 80 test1.png &gt; out.jpeg"</code>
 Benchmark 1: cjpeg -q 80 test1.png &gt; out.jpeg</p>
 <blockquote>
 <p>Time (mean ± σ):     196.7 ms ±   1.2 ms    [User: 191.2 ms, System: 5.1 ms]
  Range (min … max):   195.3 ms … 199.7 ms    20 runs</p>
 </blockquote>
 <p>cjpegli <strong>4:4:4 rgb</strong> <em>184.8 kB</em></p>
-<p>% hyperfine --warmup 5 --runs 20 "cjpegli test1.png -d 1.4 --chroma_subsampling=444 out_444.jpeg"
+<p><code>% hyperfine --warmup 5 --runs 20 "cjpegli test1.png -d 1.4 --chroma_subsampling=444 out_444.jpeg"</code>
 Benchmark 1: cjpegli test1.png -d 1.4 --chroma_subsampling=444 out_444.jpeg</p>
 <blockquote>
 <p>Time (mean ± σ):     139.8 ms ±   0.8 ms    [User: 132.0 ms, System: 7.5 ms]
  Range (min … max):   138.3 ms … 141.5 ms    20 runs</p>
 </blockquote>
 <p>cjpegli <strong>4:4:4 xyb</strong> <em>179.5 kB</em></p>
-<p>% hyperfine --warmup 5 --runs 20 "cjpegli test1.png --xyb -d 1.4 --chroma_subsampling=444 out_444-xyb.jpeg"
+<p><code>% hyperfine --warmup 5 --runs 20 "cjpegli test1.png --xyb -d 1.4 --chroma_subsampling=444 out_444-xyb.jpeg"</code>
 Benchmark 1: cjpegli test1.png --xyb -d 1.4 --chroma_subsampling=444 out_444-xyb.jpeg</p>
 <blockquote>
 <p>Time (mean ± σ):     156.7 ms ±   0.8 ms    [User: 148.7 ms, System: 7.6 ms]
  Range (min … max):   155.4 ms … 158.3 ms    20 runs</p>
 </blockquote>
 <p>cjpegli <strong>4:2:2 xyb</strong> <em>178.9 kB</em></p>
-<p>% hyperfine --warmup 5 --runs 20 "cjpegli test1.png --xyb -d 0.9 --chroma_subsampling=422 out_422-xyb.jpeg"
+<p><code>% hyperfine --warmup 5 --runs 20 "cjpegli test1.png --xyb -d 0.9 --chroma_subsampling=422 out_422-xyb.jpeg"</code>
 Benchmark 1: cjpegli test1.png --xyb -d 0.9 --chroma_subsampling=422 out_422-xyb.jpeg</p>
 <blockquote>
 <p>Time (mean ± σ):     149.8 ms ±   0.8 ms    [User: 141.9 ms, System: 7.5 ms]
  Range (min … max):   148.4 ms … 151.8 ms    20 runs</p>
 </blockquote>
 <p>cjpegli <strong>4:2:0 xyb</strong> <em>186.4 kB</em></p>
-<p>% hyperfine --warmup 5 --runs 20 "cjpegli test1.png --xyb -d 0.5 --chroma_subsampling=420 out_420-xyb.jpeg"
+<p><code>% hyperfine --warmup 5 --runs 20 "cjpegli test1.png --xyb -d 0.5 --chroma_subsampling=420 out_420-xyb.jpeg"</code>
 Benchmark 1: cjpegli test1.png --xyb -d 0.5 --chroma_subsampling=420 out_420-xyb.jpeg</p>
 <blockquote>
 <p>Time (mean ± σ):     147.8 ms ±   0.7 ms    [User: 139.8 ms, System: 7.6 ms]

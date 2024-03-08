@@ -1,6 +1,62 @@
+@font-face {
+    font-family: 'Onest';
+    src: url('/fonts/onest.woff2');
+    font-weight: 200 700;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Monaspace Xenon';
+    src: url('/fonts/MonaspaceXenon.woff2');
+    font-weight: unset;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Young Serif';
+    src: url('/fonts/YoungSerif.woff2');
+    font-weight: unset;
+    font-style: normal;
+}
+
+.page-title {
+    font-family: 'Young Serif', serif;
+    display: inline-grid;
+    font-size: 40px;
+    font-weight: 800;
+    padding-bottom: 3px
+}
+
+.title {
+    font-family: 'Young Serif', serif;
+    display: inline-grid;
+    font-size: 36px;
+    font-weight: 800;
+    padding-bottom: 3px
+}
+
+:root {
+    font-family: 'Onest', sans-serif;
+    font-size: 15px;
+    line-height: 1.15;
+    color: oklch(100.0% 0 0);
+    text-decoration: unset;
+}
+
+body * {
+    margin-bottom: 8px;
+    margin-top: 8px;
+    font-family: 'Onest', sans-serif;
+    font-size: 15px;
+    line-height: 1.15;
+    color: oklch(100.0% 0 0);
+    text-decoration: none;
+}
+
 h1, h2, h3, h4, h5, h6 {
-    line-height: 2;
-    margin-bottom: 18px
+    font-family: 'Young Serif', serif;
+    line-height: 1;
+    margin-top: 0px;
+    padding-bottom: 12px;
+    font-weight: 600;
 }
 h1 {
     font-size: 30px;
@@ -9,21 +65,21 @@ h2 {
     font-size: 24px;
 }
 h3 {
-    font-size: 18px;
+    font-size: 20px;
 }
 h4 {
-    font-size: 16px;
+    font-size: 18px;
 }
 h5 {
-    font-size: 14px;
+    font-size: 16px;
 }
 h6 {
-    font-size: 13px;
+    font-size: 14px;
 }
 
 p {
-    line-height: 1.5;
-    margin-bottom: 8px;
+    line-height: 1.6;
+    margin-bottom: 18px;
 }
 
 ul {
@@ -37,24 +93,25 @@ ol {
 }
 
 a {
-    color: #3584e4;
+    color: oklch(79.43% 0.0631 144.1);
+    text-decoration: none;
 }
 
 a:hover {
-    color: #62a0ea;
+    color: oklch(95% 0.05 75);
     text-decoration: none;
 }
 
 blockquote {
-    color:#BDBDBD;
-    margin:0;
+    margin: 0;
     padding-left: 1em;
-    border-left: 0.5em #303030 solid;
+    border-left: 0.5em oklch(37% 0.01 75) solid;
 }
 
 code {
-    background-color: #3A3A3A;
-    color: #FFFFFF;
+    font-family: "Monaspace Xenon", monospace;
+    background-color: oklch(37% 0.01 75);
+    color: oklch(95% 0.05 75);
     padding: 1px 3px;
     font-size: 14px;
     -webkit-border-radius: 3px;
@@ -67,12 +124,13 @@ code {
     margin: 0 0 18px;
     line-height: 16px;
     font-size: 12px;
-    border: 1px solid #303030;
+    border: 1px solid oklch(37% 0.01 75);
+    background-color: oklch(37% 0.01 75);
     white-space: pre-wrap;
     word-wrap: break-word;
  }
  pre code {
-    background-color: #3A3A3A;
+    background-color: oklch(37% 0.01 75);
     font-size: 14px;
     padding: 0;
  }

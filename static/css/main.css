@@ -1,6 +1,72 @@
+.container {
+	background-color: oklch(37% 0.01 75);
+	border-radius: 10px;
+	box-shadow: 0 0 10px oklch(0% 0 0 / 20%); /* subtle shadow */
+	margin: 50px auto; /* centers the container horizontally */
+	max-width: 768px; /* maximum width of the container */
+	padding: 24px; /* inner spacing */
+}
+
 body {
-    background-color: #242424;
-    color: #FFFFFF;
+    background-color: #312d28;
+    color: oklch(100.0% 0 0);
+}
+
+h1 {
+    margin-top: 0;
+    font-family: 'Young Serif', serif;
+    font-size: 40px;
+    text-align: left;
+}
+
+.button-container {
+	display: flex; 
+	justify-content: center;
+	margin-top: 20px;
+}
+
+.button {
+	background-color: oklch(37% 0.01 75);
+    box-shadow: 0 0 10px oklch(0% 0 0 / 20%);
+	border: none;
+	border-radius: 5px;
+	color: oklch(100% 0 0);
+	cursor: pointer;
+	margin: 0 10px;
+	padding: 10px 20px; 
+	text-decoration: none;
+}
+
+.button:hover {
+	background-color: oklch(35% 0.01 75);
+}
+
+.social-container {
+    background-color: #312d28;
+	border-radius: 40px;
+	box-shadow: 0 0 10px rgba(49, 45, 40, 0.9);
+    display: flex;
+	justify-content: center;
+    position: fixed;
+	align-items: center;
+    bottom: 12px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    max-width: 280px;
+}
+
+.social-container a {
+	display: inline-block;
+}
+
+.social-container img {
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 0;
+    padding-bottom: 0;
+	max-width: 24px;
+	height: auto;
 }
 
 .center {
@@ -20,37 +86,25 @@ body {
     transform: translate(-50%, -50%);
 }
 
-.blog-button {
-    padding: 10px;
-    border: 3px solid #242424;
-    border-radius: 3px;
-}
-
-.email-button {
-    padding: 10px;
-    border: 3px solid #242424;
-    border-radius: 3px;
-    position: absolute;
-    left: 50%;
-    top: 400%;
-    transform: translate(-50%, -400%);
-}
-
 .tag {
     display: inline-grid;
     font-size: 11px;
     padding: 1px 3px 1px 3px;
-    border: 2px solid #242424;
+    border: 2px solid #312d28;
     border-radius: 4px;
     margin-top: 2px;
 }
 
 .post {
-    padding-bottom: 20px;
+    background-color: oklch(37% 0.01 75);
+	border-radius: 10px;
+	box-shadow: 0 0 10px oklch(0% 0 0 / 20%);
+	max-width: 768px;
+	padding: 24px;
 }
 
 .post * {
-    color: #FFFFFF;
+    color: oklch(100.0% 0 0);
 }
 
 .title {
@@ -73,7 +127,7 @@ body {
 }
 
 a:hover {
-    color: #62a0ea;
+    color: oklch(79.43% 0.0631 144.1);
     text-decoration: none;
 }
 
