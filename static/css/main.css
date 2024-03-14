@@ -1,5 +1,6 @@
 .container {
 	background-color: oklch(37% 0.01 75);
+    border: 1px solid oklch(39% 0.01 75);
 	border-radius: 10px;
 	box-shadow: 0 0 10px oklch(0% 0 0 / 20%); /* subtle shadow */
 	margin: 50px auto; /* centers the container horizontally */
@@ -25,10 +26,30 @@ h1 {
 	margin-top: 20px;
 }
 
+.button-container-left {
+	display: flex;
+	justify-content: left;
+    margin-left: 0;
+	margin-top: 12px;
+    margin-bottom: 32px;
+}
+
+.button-blog {
+	background-color: oklch(37% 0.01 75);
+    box-shadow: 0 0 10px oklch(0% 0 0 / 20%);
+    border: 1px solid oklch(39% 0.01 75);
+	border-radius: 5px;
+	color: oklch(100% 0 0);
+	cursor: pointer;
+	margin-right: 12px;
+	padding: 10px 20px; 
+	text-decoration: none;
+}
+
 .button {
 	background-color: oklch(37% 0.01 75);
     box-shadow: 0 0 10px oklch(0% 0 0 / 20%);
-	border: none;
+    border: 1px solid oklch(39% 0.01 75);
 	border-radius: 5px;
 	color: oklch(100% 0 0);
 	cursor: pointer;
@@ -97,10 +118,30 @@ h1 {
 
 .post {
     background-color: oklch(37% 0.01 75);
+    border: 1px solid oklch(39% 0.01 75);
+	border-radius: 10px;
+	box-shadow: 0 0 10px oklch(0% 0 0 / 20%);
+    cursor: pointer;
+	max-width: 768px;
+	padding: 24px;
+}
+
+.post-header {
+    background-color: oklch(37% 0.01 75);
+    border: 1px solid oklch(39% 0.01 75);
 	border-radius: 10px;
 	box-shadow: 0 0 10px oklch(0% 0 0 / 20%);
 	max-width: 768px;
 	padding: 24px;
+}
+
+.post:hover {
+	background-color: oklch(35% 0.01 75);
+    border: 1px solid oklch(39% 0.01 75);
+    .title {
+        color: oklch(95% 0.05 75);
+        text-decoration: none;
+    }
 }
 
 .post * {

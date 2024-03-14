@@ -1,0 +1,91 @@
+@font-face {
+    font-family: 'Monaspace Radon';
+    src: url('/fonts/MonaspaceRadon.woff2');
+    font-weight: unset;
+    font-style: normal;
+}
+
+code {
+    font-family: "Monaspace Xenon", monospace;
+    background-color: oklch(37% 0.01 75);
+    color: oklch(95% 0.05 75);
+    padding: 1px 3px;
+    font-size: 14px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    font-variant-ligatures: discretionary-ligatures;
+ }
+ pre {
+    font-family: "Monaspace Xenon", monospace;
+    display: block;
+    padding: 14px;
+    margin: 0 0 18px;
+    line-height: 16px;
+    font-size: 12px;
+    border: 1px solid oklch(39% 0.01 75);
+    border-radius: 10px;
+    background-color: oklch(37% 0.01 75);
+    white-space: pre-wrap;
+    word-wrap: break-word;
+ }
+ pre code {
+    font-family: "Monaspace Xenon", monospace;
+    background-color: oklch(37% 0.01 75);
+    font-size: 14px;
+    padding: 0;
+ }
+
+.language-zig {
+    font-family: "Monaspace Xenon", monospace;
+    color: oklch(95% 0.05 75);
+}
+
+.language-zig .token.class-name {
+    font-family: "Monaspace Xenon", monospace;
+    color: oklch(76% 0.2 0);
+    font-weight: bold;
+}
+
+.language-zig .token.function {
+    font-family: "Monaspace Xenon", monospace;
+    color: oklch(76% 0.183 30);
+}
+
+.language-zig .token.keyword {
+    font-family: "Monaspace Xenon", monospace;
+    color: oklch(76% 0.23 158);
+    font-weight: normal;
+}
+
+.language-zig .token.number {
+    font-family: "Monaspace Xenon", monospace;
+    color: oklch(76% 0.17 209);
+}
+
+.language-zig .token.operator {
+    font-family: "Monaspace Xenon", monospace;
+    color: oklch(76% 0.1 75);
+}
+
+.language-zig .token.punctuation {
+    font-family: "Monaspace Xenon", monospace;
+    color: oklch(76% 0.01 75);
+}
+
+.language-zig .token.comment {
+    font-family: "Monaspace Radon", monospace;
+    color: oklch(76% 0.05 75);
+    font-style: normal;
+}
+
+.language-zig .token.builtin {
+    font-family: "Monaspace Xenon", monospace;
+    color: oklch(76% 0.3 331);
+    font-weight: normal;
+}
+
+.language-zig .token.string {
+    font-family: "Monaspace Xenon", monospace;
+    color: oklch(76% 0.19 109);
+}

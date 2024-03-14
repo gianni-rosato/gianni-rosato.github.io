@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+
+<html>
+    
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Lossless Data Compression</title>
+        <meta name="description" content="A comprehensive comparison and analysis of various lossless data compression algorithms, including ZIP, 7zip, XZ, Brotli, Zstandard, and ZPAQ.">
+        <meta name="keywords" content="lossless data compression, ZIP, 7zip, XZ, Brotli, Zstandard, ZPAQ, compression algorithms, performance analysis">
+        <meta name="author" content="Gianni Rosato">
+        <meta name="robots" content="index, follow">
+        <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+        <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+        <meta property="og:title" content="Lossless Data Compression">
+        <meta property="og:description" content="A comprehensive comparison and analysis of various lossless data compression algorithms, including ZIP, 7zip, XZ, Brotli, Zstandard, and ZPAQ.">
+        <meta property="og:type" content="article">
+        <meta property="og:url" content="https://www.giannirosato.com/blog/lossless-data-comp">
+        <script src="/static/js/prism.min.js"></script>
+        <script src="/static/js/prism-zig.min.js"></script>
+        <link href="/static/favicon.webp" rel="icon">
+        <link href="/static/css/reset.css" rel="stylesheet">
+        <link href="/static/css/main.css" rel="stylesheet">
+        <link href="/static/css/markdown.css" rel="stylesheet">
+        <title>
+QOI Encoding in Zig
+</title>
+
+        <link href="/static/favicon.webp" rel="icon">
+        <link href="/static/css/reset.css" rel="stylesheet">
+        <link href="/static/css/main.css" rel="stylesheet">
+        <link href="/static/css/markdown.css" rel="stylesheet">
+        <link href="/static/css/code.css" rel="stylesheet">
+    </head>
+
+    <body>
+            
+
+<div class="center">
+    <div class="post-header">
+        <div class="title" style="display: inline-grid;">QOI Encoding in Zig</div>
+        <div class="date">Mar 13, 2024</div>
+        
+        <a class="tag" href="/blog/tag/projects/">projects</a>
+        <a class="tag" href="/blog/tag/programming/">programming</a>
+        
+    </div>
+    <div class="button-container-left">
+        <a href="/blog/" class="button-blog">Back</a>
+        <a href="/" class="button-blog">Home</a>
+    </div>
+<h2 id="why-">Why?</h2>
+<p>I started writing C as my first programming language in October. While I have other projects labelled under the programming tag on this site, a friend was the lead developer on both, and I just becoming familiar with Python; I never truly learned the concepts until later, as I had&#39;t needed to until I took over development for these projects. I have dabbled with Bash scripts, but other than that, I have had very limited programming exposure, though I've had extensive exposure to technology. Becoming familiar with C quickly led me to discover Zig in November. Around the same time, I stumbled upon the QOI (Quite OK Image Format) lossless image format built around speed and simplicity. The simplicity part was what caught my eye; I&#39;m a new programmer, and writing a QOI encoder would simultaneously allow me to get down and dirty with manipulating data on a low level without getting into the weeds of a more complicated spec like that of PNG.</p>
+<p>Here&#39;s the project link, before we get too carried away: <a href="https://github.com/gianni-rosato/qoi-enc-zig">GitHub Link</a></p>
+<p>As soon as I got started with Zig, I already felt it was cool; Rust felt (and continues to feel) intimidating as I was just becoming familiar with C. &quot;Higher-level&quot; languages don&#39;t interest me very much.</p>
+<p>Full disclosure: I&#39;m not going to go through <em>everything</em> here, and I may get some terminology details wrong. Please reach out to correct me if you notice anything.</p>
+<h2 id="zig">Zig</h2>
+<p>Zig is a programming language designed to be the modern replacement for C.</p>
+<p>I won&#39;t go over every advantage Zig brings to the table over other languages, but according to <a href="https://ziglang.org/learn/why_zig_rust_d_cpp/">Zig&#39;s official site</a>, Zig has some unique advantages over languages like C++, D, and Rust:</p>
+<ol>
+<li><em>No hidden control flow or allocations</em>: Zig code is explicit about function calls and memory allocation, so readability is improved and the programmer has more control.</li>
+<li><em>First-class support for no standard library</em>: Zig can be used without any standard library, making it friendly for bare-metal and high-performance development.</li>
+<li><em>A portable language for libraries</em>: Zig aims to be a new portable language for libraries, interacting well with C code while introducing safety and better language design.</li>
+<li><em>A package manager and build system</em>: Zig comes with a capable build system and package manager, useful even for existing C/C++ projects.</li>
+<li><em>Simplicity</em>: Zig avoids unclear features like macros and operator overloading found in other languages.</li>
+<li><em>Tooling</em>: Zig provides a comprehensive toolchain with cross-compilation (which is very cool), C/C++ support, resource compiler, and more, packaged in a single archive.</li>
+</ol>
+<p>Zig positions itself as a simpler, more explicit, more portable language than C++, D, and Rust while offering more powerful tooling, which is all fine and dandy, but I&#39;m not super familiar with Rust, D, or C++. Compared to C, Zig&#39;s additional safety features like safety-checked undefined behavior and the <code>defer</code> keyword to prevent issues one could normally have with <code>free()</code> in C are what make Zig special and interesting to me. Its focus on simplicity and safety makes it a compelling choice for systems programming tasks, including working with multimedia codecs.</p>
+<h2 id="qoi-overview">QOI Overview</h2>
+<p>QOI is very cool because it is extremely simple while still being relatively efficient for a lossless image codec.</p>
+<p>QOI supports two colorspaces: Linear RGB &amp; sRGB with linear alpha. These do not affect the way pixels are encoded. Pixels have either three or four channels; they are either RGB or RGBA. The QOI philosophy is that everything is byte-aligned, making it trivial to stream bytes to a decoder one at a time and have the decoder produce a usable output.</p>
+<p>QOI&#39;s lossless compression takes place via six main pixel types:</p>
+<ul>
+<li><p><code>SPEC_NAME</code> (&quot;Name I Made Up&quot;): Description from spec. I&#39;m only making up a name so I can reference it elsewhere more easily.</p>
+</li>
+</ul>
+<ol>
+<li><p><code>QOI_OP_RGB</code> (&quot;RGB Pixels&quot;): Full RGB pixel value using 8 bits for each of the red, green, and blue channels. The alpha channel is 255 in RGB images, and remains unchanged from the previous pixel.</p>
+</li>
+<li><p><code>QOI_OP_RGBA</code> (&quot;RGBA Pixels&quot;): Full RGBA pixel value using 8 bits for each of the red, green, blue, &amp; alpha channels.</p>
+</li>
+<li><p><code>QOI_OP_DIFF</code> (&quot;Diff Pixels&quot;): The difference between the current pixel and the previous pixel for the red, green, and blue channels are stored using 2 bits for each channel. The differences are stored with a bias of 2 and wrap (so 1 minus 2 would be 255). The alpha channel remains unchanged.</p>
+</li>
+<li><p><code>QOI_OP_LUMA</code> (&quot;Luma Pixels&quot;): These pixels encode the green channel difference from the previous pixel using 6 bits, and then encode the red and blue channel differences relative to the green channel difference using 4 bits each. This allows for more efficient encoding of small color changes. The alpha channel remains unchanged.</p>
+</li>
+<li><p><code>QOI_OP_RUN</code> (&quot;Run Pixels&quot;): These are the simplest, encoding a run-length of pixels that are identical to the previous pixel. The run length is stored using 6 bits with a bias of -1, allowing for runs of 1 to 62 pixels.</p>
+</li>
+<li><p><code>QOI_OP_INDEX</code> (&quot;Hashed Pixels&quot;): These are stored by referencing a previously seen pixel value from a rolling array of 64 recent pixel values by using a simple hash on each pixel as it is identified. If another pixel matches a previously seen hash value in the array, the index of the referenced pixel is stored.</p>
+</li>
+</ol>
+<p>That&#39;s pretty much it! The entire spec is <a href="https://qoiformat.org/qoi-specification.pdf">one page</a> if you&#39;d like a bit more detail. Amazingly, QOI <a href="https://qoiformat.org/benchmark/">trades blows with libpng&#39;s PNG encoding while being much faster</a> on average given the test corpus the author used in that benchmark.</p>
+<h2 id="explaining-the-codebase">Explaining the Codebase</h2>
+<p>Now that I&#39;ve done the requisite amount of shilling, it is time to get into the real content. I want this to be a thorough walk-through of my decisions writing this encoding implementation, so you can take inspiration from my work on your own if you are also new to Zig. Again, the source code for my project can be found at <a href="https://github.com/gianni-rosato/qoi-enc-zig/">this git repository</a>.</p>
+<p>The program starts by importing the necessary standard library modules and defining the necessary data structures. The <code>QoiEnum</code> enum, for instance, defines the different opcodes used in the QOI format, such as <code>QOI_OP_RGB</code> and <code>QOI_OP_RGBA</code>:</p>
+<pre><code class="language-zig">const QoiEnum = enum(u8) {
+
+    QOI_OP_RGB = 0xFE,
+    QOI_OP_RGBA = 0xFF,
+    QOI_OP_INDEX = 0x00,
+    QOI_OP_DIFF = 0x40,
+    QOI_OP_LUMA = 0x80,
+    QOI_OP_RUN = 0xC0,
+    
+};</code></pre>
+<p>These are fundamental to the QOI format&#39;s compression techniques, which we&#39;ll explore in a bit.</p>
+<p>Next, we have the <code>QoiPixel</code> union, which represents a single pixel&#39;s color values. By using a union, we can access the pixel&#39;s channels (red, green, blue, alpha) individually through the <code>channels</code> array or the <code>vals</code> struct. We can also access them as a single unsigned 32-bit integer through <code>concatenated_pixel_values</code>:</p>
+<pre><code class="lang-zig">const QoiPixel = extern <span class="hljs-class"><span class="hljs-keyword">union</span> {</span>
+    <span class="hljs-symbol">vals:</span> extern <span class="hljs-class"><span class="hljs-keyword">struct</span> {</span>
+        <span class="hljs-symbol">red:</span> u8,
+        <span class="hljs-symbol">green:</span> u8,
+        <span class="hljs-symbol">blue:</span> u8,
+        <span class="hljs-symbol">alpha:</span> u8,
+    },
+    <span class="hljs-symbol">channels:</span> [<span class="hljs-number">4</span>]u8,
+    <span class="hljs-symbol">concatenated_pixel_values:</span> u32,
+};
+</code></pre>
+<p>Important to note here is that the <code>extern</code> keyword defines the union (and the enclosed struct) as C ABI compatible data structures. In Zig&#39;s standard unions without the <code>extern</code> keyword, trying to access inactive fields of the union is safety-checked undefined behavior. Your code will compile successfully, but if you compiled in Safe mode (which you probably did by default with <code>zig build</code>) you&#39;ll get some runtime errors accompanied by a stack trace. I enjoy the fact that Zig allows you to use <code>extern union</code>s to essentially get different &quot;viewpoints&quot; on how to access the underlying data in memory while maintaining a different native paradigm; it is a testament to the language&#39;s ability to espouse flexibility while still providing a feeling of familiarity.</p>
+<p>The <code>QoiDesc</code> struct holds essential information about the image being encoded, including its dimensions, color channels, and colorspace, in order to write the header for the encoded file. This struct provides methods for assigning our instance of <code>QoiDesc</code> &amp; writing the QOI header to the output file:</p>
+<pre><code class="lang-zig"><span class="hljs-keyword">const</span> QoiDesc = <span class="hljs-class"><span class="hljs-keyword">struct</span> {</span>
+    width: <span class="hljs-keyword">u32</span> = <span class="hljs-number">0</span>,
+    height: <span class="hljs-keyword">u32</span> = <span class="hljs-number">0</span>,
+    channels: <span class="hljs-keyword">u8</span> = <span class="hljs-number">0</span>,
+    colorspace: <span class="hljs-keyword">u8</span> = <span class="hljs-number">0</span>,
+
+    <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">qoiSetEverything</span></span>(w: <span class="hljs-keyword">u32</span>, h: <span class="hljs-keyword">u32</span>, ch: <span class="hljs-keyword">u8</span>, c: <span class="hljs-keyword">u8</span>) QoiDesc {
+        <span class="hljs-keyword">return</span> QoiDesc{ .width = w, .height = h, .channels = ch, .colorspace = c };
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">writeQoiHeader</span></span>(<span class="hljs-keyword">self</span>: QoiDesc, dest: *[<span class="hljs-number">14</span>]<span class="hljs-keyword">u8</span>) void {
+        <span class="hljs-comment">// ... (implementation omitted for brevity)</span>
+    }
+};
+</code></pre>
+<p>Struct methods in Zig are not super different from normal functions. According to Zig&#39;s website:</p>
+<blockquote>
+<p>Struct methods are not special, they are only namespaced functions that you can call with dot syntax. (<a href="https://ziglang.org/documentation/master/#struct">1</a>)</p>
+</blockquote>
+<p>Using these within the scope of struct definitions is cool because it makes the codebase nice and neat. You can also call methods with dot syntax, which feels tidy:</p>
+<pre><code class="lang-zig">// <span class="hljs-keyword">Declare</span> <span class="hljs-keyword">variable</span> <span class="hljs-string">`desc`</span> providing width, height, channels, colorspace.
+// We can <span class="hljs-keyword">call</span> this method <span class="hljs-keyword">using</span> dot syntax <span class="hljs-keyword">on</span> the <span class="hljs-keyword">type</span>:
+    <span class="hljs-keyword">var</span> <span class="hljs-keyword">desc</span> = QoiDesc.qoiSetEverything(width, height, channels, colorspace);
+// Now, we <span class="hljs-keyword">use</span> dot syntax <span class="hljs-keyword">on</span> the <span class="hljs-string">`desc`</span> <span class="hljs-keyword">variable</span> <span class="hljs-keyword">to</span> <span class="hljs-keyword">call</span> the
+// <span class="hljs-string">`writeQoiHeader`</span> method, <span class="hljs-keyword">where</span> <span class="hljs-string">`desc`</span> <span class="hljs-keyword">is</span> passed <span class="hljs-keyword">to</span> the method <span class="hljs-keyword">as</span> <span class="hljs-string">`self`</span>:
+    desc.writeQoiHeader(qoi_file[<span class="hljs-number">0.</span><span class="hljs-number">.14</span>]);
+</code></pre>
+<p>You don&#39;t need to do <code>foo-&gt;bar</code> like in C, either; Zig will do that automatically if you just do <code>foo.bar</code>. I like this!</p>
+<p>The <code>QoiEnc</code> struct encapsulates the encoding logic. It maintains a pixel buffer, a run counter, and various other state variables necessary for the encoding process. The <code>qoiEncInit</code> method initializes the encoder with the image description &amp; an output buffer:</p>
+<pre><code class="lang-zig"><span class="hljs-keyword">const</span> QoiEnc = <span class="hljs-class"><span class="hljs-keyword">struct</span> {</span>
+    buffer: [<span class="hljs-number">64</span>]QoiPixel,
+    prev_pixel: QoiPixel,
+
+    pixel_offset: <span class="hljs-keyword">usize</span>,
+    len: <span class="hljs-keyword">usize</span>,
+
+    data: [*]<span class="hljs-keyword">u8</span>,
+    offset: [*]<span class="hljs-keyword">u8</span>,
+
+    run: <span class="hljs-keyword">u8</span>,
+    pad: <span class="hljs-keyword">u24</span>,
+
+    <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">qoiEncInit</span></span>(<span class="hljs-keyword">self</span>: *QoiEnc, desc: QoiDesc, data: [*]<span class="hljs-keyword">u8</span>) !void {
+        <span class="hljs-comment">// ... (implementation omitted for brevity)</span>
+    }
+
+    <span class="hljs-comment">// ... (other methods omitted for brevity, but there are a bunch)</span>
+};
+</code></pre>
+<p>Now, remember the types of pixels allowed in QOI that we enumerated earlier? The <code>QoiEnc</code> struct provides separate methods for encoding each of these, including <code>qoiEncRun</code>, <code>qoiEncLuma</code>, <code>qoiEncIndex</code>, <code>qoiEncFullColor</code>, and <code>qoiEncDifference</code>.</p>
+<p>Let&#39;s take a closer look at the <code>qoiEncRun</code> method, which handles run-length encoding:</p>
+<pre><code class="lang-zig"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">qoiEncRun</span></span>(<span class="hljs-keyword">self</span>: *QoiEnc) void {
+    <span class="hljs-keyword">const</span> tag: <span class="hljs-keyword">u8</span> = @intFromEnum(QoiEnum.QOI_OP_RUN) | (<span class="hljs-keyword">self</span>.run - <span class="hljs-number">1</span>);
+    <span class="hljs-keyword">self</span>.run = <span class="hljs-number">0</span>;
+
+    <span class="hljs-keyword">self</span>.offset[<span class="hljs-number">0</span>] = tag;
+    <span class="hljs-keyword">self</span>.offset += <span class="hljs-number">1</span>;
+}
+</code></pre>
+<p>This is a <em>&quot;Run pixel&quot;</em> which is the simplest kind of pixel conceptually within QOI, in my opinion.</p>
+<p>This method writes a tag byte to the output buffer, indicating a run of identical pixels. The tag byte consists of the <code>QOI_OP_RUN</code> opcode combined with the run length minus one via a logical or.</p>
+<p>The <code>qoiEncLuma</code> method, on the other hand, handles encoding <em>&quot;Luma Pixels&quot;</em>:</p>
+<pre><code class="lang-zig"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">qoiEncLuma</span></span>(<span class="hljs-keyword">self</span>: *QoiEnc, green_diff: <span class="hljs-keyword">i8</span>, dr_dg: <span class="hljs-keyword">i8</span>, db_dg: <span class="hljs-keyword">i8</span>) void {
+    <span class="hljs-keyword">const</span> green_diff_biased: <span class="hljs-keyword">u8</span> = @intCast(green_diff + <span class="hljs-number">32</span>);
+    <span class="hljs-keyword">const</span> dr_dg_biased: <span class="hljs-keyword">u8</span> = @intCast(dr_dg + <span class="hljs-number">8</span>);
+    <span class="hljs-keyword">const</span> db_dg_biased: <span class="hljs-keyword">u8</span> = @intCast(db_dg + <span class="hljs-number">8</span>);
+
+    <span class="hljs-keyword">const</span> tags = [<span class="hljs-number">2</span>]<span class="hljs-keyword">u8</span>{ @intFromEnum(QoiEnum.QOI_OP_LUMA) | green_diff_biased, dr_dg_biased &lt;&lt; <span class="hljs-number">4</span> | db_dg_biased };
+
+    <span class="hljs-keyword">for</span> (tags, <span class="hljs-number">0</span>..) |tag, i| <span class="hljs-keyword">self</span>.offset[i] = tag;
+    <span class="hljs-keyword">self</span>.offset += tags.len;
+}
+</code></pre>
+<p>This method calculates the differences between the red, green, and blue channels of the current pixel and the previous pixel. It then encodes these differences using a luma tag and bias values, as we already explained when we talked about QOI.</p>
+<p>Encoding &quot;Diff Pixels&quot; with <code>qoiEncDifference</code> is a similar story:</p>
+<pre><code class="lang-zig">    fn qoiEncDifference(<span class="hljs-string">enc:</span> *QoiEnc, <span class="hljs-string">red_diff:</span> i32, <span class="hljs-string">green_diff:</span> i32, <span class="hljs-string">blue_diff:</span> i32) <span class="hljs-keyword">void</span> {
+        const <span class="hljs-string">green_diff_biased:</span> u8 = <span class="hljs-meta">@intCast</span>(green_diff + <span class="hljs-number">2</span>);
+        const <span class="hljs-string">red_diff_biased:</span> u8 = <span class="hljs-meta">@intCast</span>(red_diff + <span class="hljs-number">2</span>);
+        const <span class="hljs-string">blue_diff_biased:</span> u8 = <span class="hljs-meta">@intCast</span>(blue_diff + <span class="hljs-number">2</span>);
+
+        const <span class="hljs-string">tag:</span> u8 =
+            <span class="hljs-meta">@intFromEnum</span>(QoiEnum.QOI_OP_DIFF) |
+            red_diff_biased &lt;&lt; <span class="hljs-number">4</span> |
+            green_diff_biased &lt;&lt; <span class="hljs-number">2</span> |
+            blue_diff_biased;
+
+        enc.offset[<span class="hljs-number">0</span>] = tag;
+
+        enc.offset += <span class="hljs-number">1</span>;
+    }
+</code></pre>
+<p>The bit manipulations for properly writing to <code>enc.offset</code> felt a bit intimidating, and to be honest, they still do &amp; probably always will. Thinking about the actual structure of the pixels being written to the file, it begins to make a bit more sense thinking about the fact that the pixels are stored in order of red&#39;s difference, then green&#39;s difference, then blue&#39;s difference, with a tag preceding them; the entire pixel is a single byte, the differences are just being ordered <em>within</em> that byte.</p>
+<p>Now, let&#39;s look at encoding &quot;RGB Pixels&quot; &amp; &quot;RGBA Pixels&quot; with <code>qoiEncFullColor</code>:</p>
+<pre><code class="lang-zig">    fn qoiEncFullColor(enc: *QoiEnc, px: QoiPixel, channels: u8) <span class="hljs-keyword">void</span> {
+        var s: u3 = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">if</span> (channels &gt; <span class="hljs-number">3</span>) s = <span class="hljs-number">5</span> <span class="hljs-keyword">else</span> s = <span class="hljs-number">4</span>;
+        <span class="hljs-keyword">const</span> tags: [<span class="hljs-number">5</span>]u8 = <span class="hljs-keyword">if</span> (channels &gt; <span class="hljs-number">3</span>) .{
+            @intFromEnum(QoiEnum.QOI_OP_RGBA),
+            px.vals.<span class="hljs-built_in">red</span>,
+            px.vals.<span class="hljs-built_in">green</span>,
+            px.vals.<span class="hljs-built_in">blue</span>,
+            px.vals.<span class="hljs-built_in">alpha</span>,
+        } <span class="hljs-keyword">else</span> .{
+            @intFromEnum(QoiEnum.QOI_OP_RGB),
+            px.vals.<span class="hljs-built_in">red</span>,
+            px.vals.<span class="hljs-built_in">green</span>,
+            px.vals.<span class="hljs-built_in">blue</span>,
+            undefined,
+        };
+
+        <span class="hljs-keyword">for</span> (tags[<span class="hljs-number">0.</span>.s], <span class="hljs-number">0.</span>.s) |tag, i| enc.offset[i] = tag;
+        enc.offset += s;
+    }
+</code></pre>
+<p>Here, we have some trademark &quot;Zigginess&quot;. Let&#39;s walk through it:</p>
+<ul>
+<li>The method takes a pointer to a QoiEnc, which is essentially &quot;self&quot;</li>
+<li>A QoiPixel, and</li>
+<li>the number of channels.
+Within the method:</li>
+<li>We declare a variable <code>s</code> which is a mere 3 bits</li>
+<li>We&#39;re making <code>tags</code> an array of 5 unsigned 8-bit integers, and assigning different values to the array depending on the number of channels.</li>
+</ul>
+<p>Let&#39;s stop here for a moment. As you can see, these <code>if</code> expressions are being used more like ternary expressions would be in C. The assignment to <code>tags</code> is being done via an <em>anonymous list literal</em>. These confused me greatly when first learning Zig, but it makes a bit more sense looking at a more concise example:</p>
+<pre><code class="lang-zig">// Initialize an<span class="hljs-built_in"> array </span>with<span class="hljs-built_in"> array </span>literal syntax. Compiler infers size
+   <span class="hljs-built_in"> const </span>arr_a = [_]i6{6, 7, 8};
+// Initialize an<span class="hljs-built_in"> array </span>with an anonymous list literal. Compiler cannot
+// infer size, as it isn't aware of the anonymous list literal
+   <span class="hljs-built_in"> const </span>arr_b: [3]i6 = .{6, 7, 8};
+</code></pre>
+<p>Now we can observe the <code>for</code> loop at the end of the function block. I like the way Zig handles for loops, essentially leaving traditional C-style <code>i++</code> iteration for <code>while</code> loops. What we&#39;re essentially doing in this loop is slicing <code>tags</code> from index 0 to the index before <code>s</code>.</p>
+<blockquote>
+<p>A slice is a pointer and a length. The difference between an array and a slice is that the array&#39;s length is part of the type and known at compile-time, whereas the slice&#39;s length is known at runtime. Both can be accessed with the <code>len</code> field. (<a href="https://ziglang.org/documentation/master/#Slices">2</a>)</p>
+</blockquote>
+<p>We&#39;re also keeping track of 0 through the integer just preceding <code>s</code> with <code>0..s</code>. The values are captured with <code>|tag, i|</code>, where we use <code>i</code> to assign values with <code>tag</code> to elements in <code>enc.offset</code>. Finally, we add <code>s</code> to <code>enc.offset</code>, as <code>s</code> represents the number of bytes we need, and <code>enc.offset</code> is a u8 multi-pointer.</p>
+<p>This felt pretty cool, to have <code>for</code> loops and <code>if</code> statements so gracefully doing my bidding based on little <code>s</code>.</p>
+<p>How about we take a look at encoding &quot;Hashed Pixels&quot; next, now that we&#39;re getting the hang of things?</p>
+<pre><code class="lang-zig">    fn qoiEncIndex(<span class="hljs-string">enc:</span> *QoiEnc, <span class="hljs-string">index_pos:</span> u8) <span class="hljs-keyword">void</span> {
+        const <span class="hljs-string">tag:</span> u8 = <span class="hljs-meta">@intFromEnum</span>(QoiEnum.QOI_OP_INDEX) | index_pos;
+        enc.offset[<span class="hljs-number">0</span>] = tag;
+        enc.offset += <span class="hljs-number">1</span>;
+    }
+</code></pre>
+<p>This is pretty straightforward. We calculate the hash itself outside of the function with <code>const index_pos: u6 = @truncate(cur_pixel.vals.red *% 3 +% cur_pixel.vals.green *% 5 +% cur_pixel.vals.blue *% 7 +% cur_pixel.vals.alpha *% 11);</code>. The <code>*%</code> &amp; <code>+%</code> just mean <em>wrapping addition/multiplication</em>, which we understand from the QOI pixel descriptions. We need our numbers to wrap around. The built-in <code>@truncate</code> helps too, as it ensures we don&#39;t overflow a <code>u6</code>. The <code>enc.offset</code> is incremented by 1, because the pixel is a single byte.</p>
+<p>That&#39;s all the pixels!</p>
+<p>Now, the <code>qoiEncodeChunk</code> function is where the magic happens. It iterates over the input pixel data, compares each pixel with the previous one, and chooses the optimal encoding operation based on the differences between the pixels. The encoded data is then written to the output buffer using the respective encoding methods:</p>
+<pre><code class="lang-zig">fn qoiEncodeChunk(<span class="hljs-keyword">desc</span>: *QoiDesc, <span class="hljs-keyword">enc</span>: *QoiEnc, qoi_pixel_bytes: [*]u8) void {
+    <span class="hljs-keyword">var</span> cur_pixel: QoiPixel = undefined;
+
+    <span class="hljs-comment">// ... (omitted for brevity. this is just deciding "alpha or no alpha?"</span>
+    <span class="hljs-comment">// and writing relevant data to the current pixel.)</span>
+
+    <span class="hljs-keyword">const</span> index_pos: u6 = @truncate(cur_pixel.vals.red *% 3 +% cur_pixel.vals.green *% 5 +% cur_pixel.vals.blue *% 7 +% cur_pixel.vals.<span class="hljs-keyword">alpha</span> *% 11);
+
+    <span class="hljs-keyword">if</span> (qoiComparePixel(cur_pixel, <span class="hljs-keyword">enc</span>.prev_pixel, <span class="hljs-keyword">desc</span>.channels)) {
+        <span class="hljs-comment">// Handle "run pixel" encoding</span>
+        <span class="hljs-comment">// ...</span>
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">enc</span>.<span class="hljs-keyword">run</span> &gt; 0) {
+            <span class="hljs-keyword">enc</span>.qoiEncRun();
+        }
+        <span class="hljs-keyword">if</span> (qoiComparePixel(<span class="hljs-keyword">enc</span>.buffer[index_pos], cur_pixel, 4)) {
+            <span class="hljs-comment">// Handle "hash pixel" encoding</span>
+            <span class="hljs-comment">// ...</span>
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">enc</span>.buffer[index_pos] = cur_pixel;
+
+            <span class="hljs-comment">// Handle various encoding operations based on pixel differences</span>
+            <span class="hljs-comment">// ...</span>
+        }
+    }
+
+    <span class="hljs-keyword">enc</span>.prev_pixel = cur_pixel;
+    <span class="hljs-keyword">enc</span>.pixel_offset += 1;
+
+    <span class="hljs-comment">// Handle padding at the end of the image once it is time to do so</span>
+    <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<p>You can see the <code>index_pos</code> hash calculation in there, where it happens, and what triggers it. Hopefully, everything else is clear, too. Alongside the others, this function demonstrates Zig&#39;s ability to work with low-level data structures and perform bit-level operations.</p>
+<h2 id="main-function">Main Function</h2>
+<p>Now that we understand everything we can do to encode a QOI image, let&#39;s look at the <code>main</code> function.</p>
+<p>This <code>main</code> function serves as a great example of Zig&#39;s clean and readable syntax as well as QOI&#39;s simplicity. It parses command-line arguments, handles file I/O, and orchestrates the encoding process while staying concise. Error handling is easy in Zig, with the error union <code>!void</code> ensuring any errors are dealt with as they are returned. I&#39;d like to expand on error unions more, but I&#39;ll save that for another article.</p>
+<pre><code class="lang-zig">pub fn main() !void {
+    <span class="hljs-comment">// Get allocator</span>
+    <span class="hljs-keyword">var</span> gpa = std.heap.GeneralPurposeAllocator(.{}){};
+    <span class="hljs-keyword">const</span> allocator = gpa.allocator();
+    defer _ = gpa.deinit();
+
+    <span class="hljs-comment">// Parse args into string array (error union needs 'try')</span>
+    <span class="hljs-keyword">const</span> <span class="hljs-keyword">args</span> = try std.process.argsAlloc(allocator);
+    defer std.process.argsFree(allocator, <span class="hljs-keyword">args</span>);
+
+    <span class="hljs-keyword">if</span> (std.mem.eql(u8, <span class="hljs-keyword">args</span>[1], <span class="hljs-string">"-h"</span>) or
+        std.mem.eql(u8, <span class="hljs-keyword">args</span>[1], <span class="hljs-string">"--help"</span>) or
+        <span class="hljs-keyword">args</span>.len &lt; 4 or
+        <span class="hljs-keyword">args</span>.len &gt; 4 or
+        <span class="hljs-keyword">args</span>[1].len &lt; 1)
+    {
+        _ = try printHelp();
+        <span class="hljs-keyword">return</span>;
+    }
+
+    <span class="hljs-keyword">var</span> width: u32 = undefined;
+    <span class="hljs-keyword">var</span> height: u32 = undefined;
+    <span class="hljs-keyword">var</span> channels: u8 = undefined;
+    <span class="hljs-keyword">const</span> colorspace: u8 = try parseInt(u8, <span class="hljs-keyword">args</span>[3], 10);
+
+    <span class="hljs-keyword">print</span>(<span class="hljs-string">"Opening {s} ... "</span>, .{<span class="hljs-keyword">args</span>[1]});
+
+    <span class="hljs-keyword">const</span> <span class="hljs-keyword">file</span> = try std.fs.cwd().openFile(<span class="hljs-keyword">args</span>[1], .{ .mode = .read_only });
+    defer <span class="hljs-keyword">file</span>.<span class="hljs-keyword">close</span>();
+
+    <span class="hljs-keyword">const</span> bytes_read = try <span class="hljs-keyword">file</span>.readToEndAlloc(allocator, std.math.<span class="hljs-built_in">maxInt</span>(usize));
+    defer allocator.free(bytes_read);
+    <span class="hljs-keyword">var</span> offset: usize = 0;
+
+    <span class="hljs-keyword">if</span> (std.mem.eql(u8, bytes_read[0..2], <span class="hljs-string">"P7"</span>)) {
+        <span class="hljs-keyword">print</span>(<span class="hljs-string">"file is a PAM\n"</span>, .{});
+        offset = try parsePamHeader(bytes_read[0..72], &amp;width, &amp;height, &amp;channels);
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">print</span>(<span class="hljs-string">"\n\x1b[31mInvalid Input: Input file does not appear to be a compatible PAM.\x1b[0m\n"</span>, .{});
+        <span class="hljs-keyword">print</span>(<span class="hljs-string">"If your PAM input contains comments in the header, please strip them.\n"</span>, .{});
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">error</span>.InvalidInput;
+    }
+
+    <span class="hljs-keyword">const</span> image_size: usize = width * height * channels;
+    <span class="hljs-keyword">if</span> (image_size &gt; bytes_read.len - offset) {
+        <span class="hljs-keyword">print</span>(<span class="hljs-string">"\x1b[31mInvalid Input: Image size is larger than the file size.\x1b[0m\n"</span>, .{});
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">error</span>.InvalidInput;
+    }
+
+    <span class="hljs-keyword">var</span> <span class="hljs-keyword">desc</span> = QoiDesc.qoiSetEverything(width, height, channels, colorspace);
+
+    <span class="hljs-keyword">const</span> qoi_file_size = @<span class="hljs-keyword">as</span>(usize, <span class="hljs-keyword">desc</span>.width) * @<span class="hljs-keyword">as</span>(usize, <span class="hljs-keyword">desc</span>.height) * (@<span class="hljs-keyword">as</span>(usize, <span class="hljs-keyword">desc</span>.channels) + 1) + 14 + 8 + @sizeOf(usize);
+    <span class="hljs-keyword">var</span> qoi_file = try allocator.alloc(u8, qoi_file_size);
+    defer allocator.free(qoi_file);
+
+    <span class="hljs-keyword">print</span>(<span class="hljs-string">"Writing {s} ... "</span>, .{<span class="hljs-keyword">args</span>[2]});
+
+    <span class="hljs-keyword">desc</span>.writeQoiHeader(qoi_file[0..14]);
+
+    <span class="hljs-keyword">var</span> pixel_seek: [*]u8 = bytes_read[offset..].ptr;
+    <span class="hljs-keyword">var</span> <span class="hljs-keyword">enc</span>: QoiEnc = undefined;
+
+    try <span class="hljs-keyword">enc</span>.qoiEncInit(<span class="hljs-keyword">desc</span>, qoi_file.ptr);
+
+    <span class="hljs-keyword">while</span> (!(<span class="hljs-keyword">enc</span>.pixel_offset &gt;= <span class="hljs-keyword">enc</span>.len)) {
+        qoiEncodeChunk(&amp;<span class="hljs-keyword">desc</span>, &amp;<span class="hljs-keyword">enc</span>, pixel_seek);
+        pixel_seek += <span class="hljs-keyword">desc</span>.channels;
+    }
+
+    <span class="hljs-keyword">const</span> used_len = @intFromPtr(<span class="hljs-keyword">enc</span>.offset) - @intFromPtr(<span class="hljs-keyword">enc</span>.data);
+
+    <span class="hljs-keyword">const</span> <span class="hljs-keyword">outfile</span> = try std.fs.cwd().createFile(<span class="hljs-keyword">args</span>[2], .{ .truncate = true });
+    defer <span class="hljs-keyword">outfile</span>.<span class="hljs-keyword">close</span>();
+    _ = try <span class="hljs-keyword">outfile</span>.writeAll(<span class="hljs-keyword">enc</span>.data[0..used_len]);
+    <span class="hljs-keyword">print</span>(<span class="hljs-string">"\x1b[32mSuccess!\x1b[0m\n\tOriginal:\t{d} bytes\n\tCompressed:\t{d} bytes "</span>, .{ image_size + offset, used_len });
+    <span class="hljs-keyword">if</span> ((image_size + offset) &gt; used_len) {
+        <span class="hljs-keyword">const</span> used_len_flt: f64 = @floatFromInt(used_len);
+        <span class="hljs-keyword">const</span> image_size_flt: f64 = @floatFromInt(image_size + offset);
+        <span class="hljs-keyword">const</span> percent_dec: f64 = 100.0 - ((used_len_flt / image_size_flt) * 100.0);
+        <span class="hljs-keyword">print</span>(<span class="hljs-string">"(\x1b[33m{d:.2}%\x1b[0m smaller)\n"</span>, .{percent_dec});
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">print</span>(<span class="hljs-string">"\n"</span>, .{});
+    }
+}
+</code></pre>
+<p>That&#39;s it, the entire <code>main</code> function. It could probably be made even more concise with some code golfing, but for now, I&#39;m happy with how readable it is even without comments.</p>
+<p>Coming from any other low-level language background, I think this function is relatively easy to parse. This is a big argument for Zig, in my opinion - transitioning C projects is not a massive burden if you have interoperability as well as a codebase that feels familiar to long-time C developers. Even as a relatively inexperienced C developer, Zig was trivial to pick up.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Exploring QOI encoding in Zig has been an incredibly rewarding ordeal. Not only did this experience allow me to dive into the intricacies of simple lossless image compression, but it also showcased to me the power and versatility of Zig.</p>
+<p>Full disclosure, I may have gotten some details incorrect here, so corrections may be imminent. I&#39;ll add a note to the very top of this page if I make any larger corrections to the article.</p>
+<p>If you&#39;re a programmer seeking a modern systems programming language, I highly recommend giving Zig a try. If you have any questions, comments, or concerns, feel free to reach out to me via my socials on this site&#39;s homepage. Thanks for reading!</p>
+<p><em>Thank you to Cancername for their help with the QOI encoding implementation!</em></p>
+<p>Freestanding QOI Encoder in Zig: <a href="https://github.com/gianni-rosato/qoi-enc-zig">GitHub Link</a> (no code comments yet, coming soon).</p>
+<p><a href="https://disobey.net/@gianni">Mastodon</a> | <a href="https://matrix.to/#/@computerbustr:matrix.org">Matrix</a> | <a href="https://wiki.x266.mov/">The Codec Wiki</a></p>
+</div>
+    </body>
+</html>

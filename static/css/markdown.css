@@ -108,6 +108,11 @@ blockquote {
     border-left: 0.5em oklch(37% 0.01 75) solid;
 }
 
+blockquote p {
+    color: oklch(95% 0.01 75);
+    font-style: oblique;
+}
+
 code {
     font-family: "Monaspace Xenon", monospace;
     background-color: oklch(37% 0.01 75);
@@ -124,7 +129,7 @@ code {
     margin: 0 0 18px;
     line-height: 16px;
     font-size: 12px;
-    border: 1px solid oklch(37% 0.01 75);
+    border: 1px solid oklch(39% 0.01 75);
     background-color: oklch(37% 0.01 75);
     white-space: pre-wrap;
     word-wrap: break-word;

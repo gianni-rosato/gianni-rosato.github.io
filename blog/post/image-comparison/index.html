@@ -41,7 +41,7 @@ Image Codec Comparison
             
 
 <div class="center">
-    <div class="post">
+    <div class="post-header">
         <div class="title" style="display: inline-grid;">Image Codec Comparison</div>
         <a class="back" href="/blog/">back</a>
         <div class="date">Mar 16, 2023</div>
@@ -53,8 +53,11 @@ Image Codec Comparison
         <a class="tag" href="/blog/tag/jxl/">jxl</a>
         
     </div>
-    <h3> </h3><h3> </h3>
-    <h2>Why?</h2>
+    <div class="button-container-left">
+        <a href="/blog/" class="button-blog">Back</a>
+        <a href="/" class="button-blog">Home</a>
+    </div>
+<h2>Why?</h2>
 <p>To start things off, I have been a fan of the AVIF image format since I heard about it, not long after I started learning about the AV1 video codec in 2020. I figured the fact that it was backed by the Alliance for Open Media, was the natural successor to WebP, and was based on a rather powerful video codec that was rapidly growing in popularity was great for users &amp; organizations alike to easily understand what the technology stood for, where it came from, and what benefits it provided over the existing lossy image king, JPEG. Good codecs are open source codecs, so the fact that AVIF was open source was a big deal to me as well. It is also already <a href="https://caniuse.com/avif">widely supported</a> at the time of writing. I thought unequivocally that AVIF would be the future of images on the web when I first learned about it. I don't think I was entirely wrong, but I hadn't yet heard of JPEG-XL.</p>
 <p><a href="https://jpegxl.info/">JPEG-XL</a> (JXL for short) is an image codec by the JPEG committee (yes, <em>the</em> JPEG committee). Initially I hadn't thought much of the codec because the compression efficiency was "the same as AVIF," so I kind of wrote it off, as I'm sure many uninformed people have &amp; continue to do. Upon doing more research, my position flipped and I found myself deeply invested in the future of JXL.</p>
 <p>JXL's fascinating features include the highly efficient variable-blocksize discrete cosine transform (which is superior to JPEG's DCT), usage of the XYB colorspace which more accurately represents the response our cones in our eyeballs have to different wavelengths of light, &amp; a "modular" mode for efficient lossless or near-lossless coding. It is also used while encoding lossy JPEG-XL images, but I don't know much about it &amp; I won't pretend to. Currently the reference encoder also supports patch detection, noise synthesis, and will (probably) eventually support spline detection as it is present in the codec specification. JPEG-XL also supports <em>lossless JPEG transcoding</em> that <em>reduces the filesize of JPEGs</em> which in my opinion is a game-changing feature. That alone could be a revolutionary codec by itself. Progressive decode is also a standout feature of JPEG-XL, and I found <a href="https://opensource.googleblog.com/2021/09/using-saliency-in-progressive-jpeg-xl-images.html">this article</a> very interesting regarding that.</p>

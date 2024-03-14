@@ -21,7 +21,7 @@ XYB JPEG
             
 
 <div class="center">
-    <div class="post">
+    <div class="post-header">
         <div class="title" style="display: inline-grid;">XYB JPEG</div>
         <a class="back" href="/blog/">back</a>
         <div class="date">Jul 16, 2023</div>
@@ -33,7 +33,10 @@ XYB JPEG
         <a class="tag" href="/blog/tag/jpeg/">jpeg</a>
         
     </div>
-<h3> </h3><h3> </h3>
+    <div class="button-container-left">
+        <a href="/blog/" class="button-blog">Back</a>
+        <a href="/" class="button-blog">Home</a>
+    </div>
 <h1>XYB JPEG</h1>
 <p>This is going to be a shorter post because I have done this kind of visual quality evaluation three times now, so if you're not sure what you're reading, please look at my <a href="https://giannirosato.com/blog/post/image-comparison/">Image Codec Comparison</a> post from March &amp; my <a href="https://giannirosato.com/blog/post/jpegli/">Mini Image Codec Comparison</a> from just last month. This may be the last one of these kinds of posts for a while unless something interesting can be wrung out of another SSIMULACRA2 plot. Maybe with comparing speeds next time?</p>
 <p>The reason I'm making this post is that I just discovered that the <code>ssimulacra2</code> binary that comes with libjxl can properly decode &amp; benchmark XYB JPEG encoded with <code>cjpegli</code> &amp; I wanted to test it for myself. The source images &amp; results are published here, but first I think it is worth explaining in greater detail what the XYB color space is.</p>
