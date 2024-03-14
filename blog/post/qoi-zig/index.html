@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 
 <html>
-    
+
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>Lossless Data Compression</title>
-        <meta name="description" content="A comprehensive comparison and analysis of various lossless data compression algorithms, including ZIP, 7zip, XZ, Brotli, Zstandard, and ZPAQ.">
-        <meta name="keywords" content="lossless data compression, ZIP, 7zip, XZ, Brotli, Zstandard, ZPAQ, compression algorithms, performance analysis">
+        <title>QOI Encoding in Zig</title>
+        <meta name="description" content="An in-depth look at implementing a QOI encoder in the Zig programming language, exploring the QOI image format and Zig's features.">
+        <meta name="keywords" content="QOI, Zig, lossless, image compression, image encoding, programming">
+        <meta property="og:title" content="QOI Encoding in Zig">
+        <meta property="og:description" content="An in-depth look at implementing a QOI encoder in the Zig programming language, exploring the QOI image format and Zig's features.">
         <meta name="author" content="Gianni Rosato">
         <meta name="robots" content="index, follow">
         <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
         <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-        <meta property="og:title" content="Lossless Data Compression">
-        <meta property="og:description" content="A comprehensive comparison and analysis of various lossless data compression algorithms, including ZIP, 7zip, XZ, Brotli, Zstandard, and ZPAQ.">
         <meta property="og:type" content="article">
-        <meta property="og:url" content="https://www.giannirosato.com/blog/lossless-data-comp">
+        <meta property="og:url" content="https://www.giannirosato.com/blog/qoi-zig/">
         <script src="/static/js/prism.min.js"></script>
         <script src="/static/js/prism-zig.min.js"></script>
         <link href="/static/favicon.webp" rel="icon">
@@ -34,16 +34,16 @@ QOI Encoding in Zig
     </head>
 
     <body>
-            
+
 
 <div class="center">
     <div class="post-header">
         <div class="title" style="display: inline-grid;">QOI Encoding in Zig</div>
         <div class="date">Mar 13, 2024</div>
-        
+
         <a class="tag" href="/blog/tag/projects/">projects</a>
         <a class="tag" href="/blog/tag/programming/">programming</a>
-        
+
     </div>
     <div class="button-container-left">
         <a href="/blog/" class="button-blog">Back</a>
@@ -100,7 +100,7 @@ QOI Encoding in Zig
     QOI_OP_DIFF = 0x40,
     QOI_OP_LUMA = 0x80,
     QOI_OP_RUN = 0xC0,
-    
+
 };</code></pre>
 <p>These are fundamental to the QOI format&#39;s compression techniques, which we&#39;ll explore in a bit.</p>
 <p>Next, we have the <code>QoiPixel</code> union, which represents a single pixel&#39;s color values. By using a union, we can access the pixel&#39;s channels (red, green, blue, alpha) individually through the <code>channels</code> array or the <code>vals</code> struct. We can also access them as a single unsigned 32-bit integer through <code>concatenated_pixel_values</code>:</p>
