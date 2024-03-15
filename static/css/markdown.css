@@ -1,18 +1,18 @@
 @font-face {
-    font-family: 'Onest';
-    src: url('/fonts/onest.woff2');
-    font-weight: 200 700;
+    font-family: 'Absans';
+    src: url('/fonts/Absans.woff2') format("woff2");
+    font-weight: unset;
     font-style: normal;
 }
 @font-face {
     font-family: 'Monaspace Xenon';
-    src: url('/fonts/MonaspaceXenon.woff2');
+    src: url('/fonts/MonaspaceXenon.woff2') format("woff2");
     font-weight: unset;
     font-style: normal;
 }
 @font-face {
     font-family: 'Young Serif';
-    src: url('/fonts/YoungSerif.woff2');
+    src: url('/fonts/YoungSerif.woff2') format("woff2");
     font-weight: unset;
     font-style: normal;
 }
@@ -34,8 +34,8 @@
 }
 
 :root {
-    font-family: 'Onest', sans-serif;
-    font-size: 15px;
+    font-family: 'Absans', sans-serif;
+    font-size: 16px;
     line-height: 1.15;
     color: oklch(100.0% 0 0);
     text-decoration: unset;
@@ -44,11 +44,12 @@
 body * {
     margin-bottom: 8px;
     margin-top: 8px;
-    font-family: 'Onest', sans-serif;
-    font-size: 15px;
+    font-family: 'Absans', sans-serif;
+    font-size: 16px;
     line-height: 1.15;
     color: oklch(100.0% 0 0);
     text-decoration: none;
+    font-variant-ligatures: discretionary-ligatures;
 }
 
 h1, h2, h3, h4, h5, h6 {

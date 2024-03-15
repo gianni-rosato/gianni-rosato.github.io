@@ -81,11 +81,11 @@ code {
 
 .language-zig .token.builtin {
     font-family: "Monaspace Xenon", monospace;
-    color: oklch(76% 0.3 331);
+    color: oklch(76% 0.207 317);
     font-weight: normal;
 }
 
 .language-zig .token.string {
     font-family: "Monaspace Xenon", monospace;
-    color: oklch(76% 0.19 109);
+    color: oklch(76% 0.05 200);
 }
