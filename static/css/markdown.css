@@ -123,19 +123,23 @@ code {
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
+    font-variant-ligatures: discretionary-ligatures;
  }
  pre {
+    font-family: "Monaspace Xenon", monospace;
     display: block;
     padding: 14px;
     margin: 0 0 18px;
     line-height: 16px;
     font-size: 12px;
     border: 1px solid oklch(39% 0.01 75);
+    border-radius: 10px;
     background-color: oklch(37% 0.01 75);
     white-space: pre-wrap;
     word-wrap: break-word;
  }
  pre code {
+    font-family: "Monaspace Xenon", monospace;
     background-color: oklch(37% 0.01 75);
     font-size: 14px;
     padding: 0;

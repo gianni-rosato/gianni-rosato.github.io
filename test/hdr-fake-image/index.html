@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>
+            HDR "Image" Test
+        </title>
+        <link href="/static/favicon.webp" rel="icon">
+        <link href="/static/css/reset.css" rel="stylesheet">
+        <link href="/static/css/main.css" rel="stylesheet">
+        <link href="/static/css/markdown.css" rel="stylesheet">
+        <link href="/static/css/video-hdr.css" rel="stylesheet">
+        <script src="/static/js/prism.min.js"></script>
+        <script src="/static/js/prism-zig.min.js"></script>
+    </head>
+
+    <body>
+
+<div class="center">
+
+    <div class="post-header">
+        <div class="title" style="display: inline-grid;">HDR Video/Image Test</div>
+        <div class="date">Mar 1, 2024</div>
+    </div>
+    <div class="button-container-left">
+        <a href="/blog/" class="button-blog">Blog</a>
+        <a href="/" class="button-blog">Home</a>
+    </div>
+
+    <h2>HDR Images in Firefox</h2>
+
+    <p>In this hidden page, I am attempting to have HDR "images" functioning in Firefox via a single AV1 frame in a WebM container (this is <em>identical</em> to an AVIF, just in a different container). The video(s, technically) below should display in HDR on all major browsers (Gecko-based/Chromium-based/WebKit-based) on HDR-compatible displays like you can find in modern MacBooks.</p>
+
+    <p>For the sake of comparison, I've also included a HEVC version of the same frame in an MP4 container. This should be HDR in Safari.</p>
+
+    <div class="video-container">
+        <picture>
+            <video autoplay muted playsinline>
+                <source src="/static/images/out_test_hdr_av1.webm" type="video/webm" alt="AV1 HDR Test 'Image'">
+            </video>
+            <video>
+                <source src="/static/images/out_test_hdr_hevc.mp4" type="video/mp4" alt="HEVC HDR Test 'Image'">
+            </video>
+        </picture>
+    </div>
+
+    <p>If the image above does not appear washed out, my test has likely succeeded. If you can't view it at all, ensure you're using a browser that supports AV1 (or HEVC).</p>
+
+    <p>Note that if you open the video in another tab, it'll attempt to open the HEVC MP4. That's not the video you're seeing, unless you are on Safari (on a pre-M3/A17 device) or another browser without AV1 support that has HEVC support.</p>
+
+    <h2>Process</h2>
+
+    <p>First, I found an HDR source video on YouTube via LG's "The Black" HDR video. Then, I used FFmpeg to extract a frame. Finally, I encoded it as AV1.</p>
+
+    <pre><code>ffmpeg -ss 00:01:22 -i input.webm -frames:v 1 -vf scale=2240:1260:flags=bicubic:param0=0:param1=1/2 -color_primaries bt2020 -colorspace 9 -color_range tv -c:v librav1e -an -qp 60 -speed 8 -tiles 4 -color_trc smpte2084 -color_primaries bt2020 -colorspace 9 -color_range tv -r 1 av1.webm</code></pre>
+
+    <pre><code>ffmpeg -ss 00:01:22 -i input.webm -frames:v 1 -vf scale=1920:1080:flags=bicubic:param0=0:param1=1/2 -color_primaries bt2020 -colorspace 9 -color_range tv -c:v libx265 -an -crf 17 -preset veryslow -color_trc smpte2084 -color_primaries bt2020 -colorspace 9 -color_range tv -r 1 -tag:v hvc1 hevc.mp4</code></pre>
+
+    <h2>Implications</h2>
+
+    <p>While using AV1 video frames as a means to display HDR "images" in Firefox is a creative solution, it highlights the need for more comprehensive support for HDR image formats across all major web browsers. As HDR content becomes more prevalent, addressing these limitations and providing a consistent and optimized user experience for HDR media will become increasingly important. Chromium already does well with AVIF (and the frankenstein Ultra HDR JPEG format), but I believe others should attempt to catch up; AVIF is just AV1 in an HEIF container, which already resembles MP4; AVIFs are just AV1 videos at the end of the day, there isn't any good reason why these cannot be displayed as HDR if they have the relevant metadata.</p>
+
+    <p>While Safari has embraced both AVIF and the arguably more promising JPEG-XL, HDR support is lacking for both of them; HDR images are tonemapped more effectively than in Firefox, but they shouldn't be tonemapped if we know video HDR is properly displayed with HEVC. If Apple wants to take the next step in propping up the incredibly promising JPEG-XL image format, they need to take the entire format seriously and push for real HDR support.</p>
+
+
+</div>
+    </body>
+</html>
