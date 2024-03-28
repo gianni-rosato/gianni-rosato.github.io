@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>
+            Modern Codec Gallery
+        </title>
+        <link href="/static/favicon.webp" rel="icon">
+        <link href="/static/css/reset.css" rel="stylesheet">
+        <link href="/static/css/main.css" rel="stylesheet">
+        <link href="/static/css/markdown.css" rel="stylesheet">
+        <link href="/static/css/image-switcher.css" rel="stylesheet">
+    </head>
+    <body>
+<div class="center">
+
+    <div class="post-header">
+        <div class="title" style="display: inline-grid;">HDR Video/Image Test</div>
+        <div class="date">Mar 1, 2024</div>
+    </div>
+    <div class="button-container-left">
+        <a href="/blog/" class="button-blog">Blog</a>
+        <a href="/" class="button-blog">Home</a>
+    </div>
+
+    <h2>Modern Codec Gallery</h2>
+
+    <h4>"Sand"</h4>
+    <div class="image-container">
+        <img id="main-image" src="/static/images/sand_demo/sand_demo_lossless.jxl" alt="12-bit Lossless JPEG-XL">
+    </div>
+    <div class="controls">
+        <div class="text-container">
+            <p id="text-box">Source | 12-bit | 8.0 MiB | Lossless</p>
+        </div>
+        <div class="button-container">
+            <button class="btn"
+                    data-image="/static/images/sand_demo/sand_demo_lossless.jxl"
+                    data-text="Source | 12-bit | 8.0 MiB | Lossless">Source</button>
+            <button class="btn"
+                    data-image="/static/images/sand_demo/sand_demo_lossy.jpg"
+                    data-text="JPEG | 8-bit | 796 KiB | 75.02 SSIMULACRA2">JPEG</button>
+            <button class="btn"
+                    data-image="/static/images/sand_demo/sand_demo_lossy.webp"
+                    data-text="WebP | 8-bit | 2.0 MiB | 75.04 SSIMULACRA2">WebP</button>
+            <button class="btn"
+                    data-image="/static/images/sand_demo/sand_demo_lossy.avif"
+                    data-text="AVIF | 10-bit | 2.1 MiB | 74.75 SSIMULACRA2">AVIF</button>
+            <button class="btn"
+                    data-image="/static/images/sand_demo/sand_demo_lossy-xyb.jpg"
+                    data-text="XYB JPEG | 8-bit | 880 KiB | 75.04 SSIMULACRA2">XYB JPEG</button>
+            <button class="btn"
+                    data-image="/static/images/sand_demo/sand_demo_lossy.jxl"
+                    data-text="JPEG-XL | 12-bit | 668 KiB | 75.04 SSIMULACRA2">JPEG-XL</button>
+        </div>
+        <script src="/static/js/image-switcher.min.js"></script>
+    </div>
+
+</div>
+    </body>
+</html>

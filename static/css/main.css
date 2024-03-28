@@ -46,6 +46,10 @@ h1 {
 	text-decoration: none;
 }
 
+.button-blog:hover {
+    background-color: oklch(35% 0.01 75);
+}
+
 .button {
 	background-color: oklch(37% 0.01 75);
     box-shadow: 0 0 10px oklch(0% 0 0 / 20%);
