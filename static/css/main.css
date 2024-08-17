@@ -171,6 +171,83 @@ h1 {
     display: inline-grid;
 }
 
+.sponsor-widget {
+    display: flex;
+    align-items: center;
+    background: linear-gradient(40deg, oklch(37% 0.01 75) 0%, oklch(37% 0.01 75) 80%, oklch(37% 0.185 328.4) 100%); 
+    border: 1px solid oklch(39% 0.01 75);
+    border-radius: 10px;
+    box-shadow: 0 0 10px oklch(0% 0 0 / 20%);
+    max-width: 576px;
+    padding: 12px;
+    margin-top: 0;
+    margin-bottom: 14px;
+}
+
+.profile-section {
+    display: flex;
+    align-items: center;
+    margin-right: 12px;
+    margin-left: 4px;
+}
+
+.profile-photo {
+    width: 48px;
+    height: 48px;
+    border: 1px solid oklch(39% 0.01 75);
+    border-radius: 50%;
+}
+
+.content-section {
+    flex-grow: 1;
+    font-size: 14px;
+    color: #ffffff;
+    margin: 0;
+}
+
+.profile-name {
+    font-size: 18px;
+    font-weight: bold;
+    color: oklch(100% 0 0);
+    margin-bottom: 0px;
+    padding-bottom: 8px;
+}
+
+.sponsor-text {
+    font-size: 14px;
+    color: #ffffff;
+    margin: 0;
+}
+
+.sponsor-button {
+    display: inline-flex;
+    align-items: center;
+    background-color: oklch(37% 0.01 75);
+    box-shadow: 0 0 10px oklch(0% 0 0 / 20%);
+    border: 1px solid oklch(39% 0.01 75);
+    border-radius: 5px;
+    color: oklch(100% 0 0);
+    cursor: pointer;
+    padding: 0px 12px;
+    font-size: 14px;
+    text-decoration: none;
+    margin-left: 12px;
+}
+
+.sponsor-button:hover {
+    background-color: oklch(35% 0.01 75);
+}
+
+.heart-icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+}
+
+.heart-icon path {
+    stroke: oklch(70.37% 0.3517 328.4);
+}
+
 a:hover {
     color: oklch(79.43% 0.0631 144.1);
     text-decoration: none;
