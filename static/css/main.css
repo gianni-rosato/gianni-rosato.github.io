@@ -21,7 +21,7 @@ h1 {
 }
 
 .button-container {
-	display: flex; 
+	display: flex;
 	justify-content: center;
 	margin-top: 20px;
 }
@@ -42,7 +42,7 @@ h1 {
 	color: oklch(100% 0 0);
 	cursor: pointer;
 	margin-right: 12px;
-	padding: 10px 20px; 
+	padding: 10px 20px;
 	text-decoration: none;
 }
 
@@ -58,7 +58,7 @@ h1 {
 	color: oklch(100% 0 0);
 	cursor: pointer;
 	margin: 0 10px;
-	padding: 10px 20px; 
+	padding: 10px 20px;
 	text-decoration: none;
 }
 
@@ -174,7 +174,7 @@ h1 {
 .sponsor-widget {
     display: flex;
     align-items: center;
-    background: linear-gradient(40deg, oklch(37% 0.01 75) 0%, oklch(37% 0.01 75) 80%, oklch(37% 0.185 328.4) 100%); 
+    background: linear-gradient(40deg, oklch(37% 0.01 75) 0%, oklch(37% 0.01 75) 80%, oklch(37% 0.185 328.4) 100%);
     border: 1px solid oklch(39% 0.01 75);
     border-radius: 10px;
     box-shadow: 0 0 10px oklch(0% 0 0 / 20%);
@@ -249,7 +249,7 @@ h1 {
 }
 
 a:hover {
-    color: oklch(79.43% 0.0631 144.1);
+    color: oklch(95% 0.05 75);
     text-decoration: none;
 }
 
