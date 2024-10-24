@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <html>
-    
+
     <head>
 
         <meta charset="utf-8">
@@ -18,20 +18,20 @@ XYB JPEG
     </head>
 
     <body>
-            
+
 
 <div class="center">
     <div class="post-header">
         <div class="title" style="display: inline-grid;">XYB JPEG</div>
         <a class="back" href="/blog/">back</a>
         <div class="date">Jul 16, 2023</div>
-        
+
         <a class="tag" href="/blog/tag/projects/">projects</a>
-        
+
         <a class="tag" href="/blog/tag/jxl/">jxl</a>
-        
+
         <a class="tag" href="/blog/tag/jpeg/">jpeg</a>
-        
+
     </div>
     <div class="button-container-left">
         <a href="/blog/" class="button-blog">Back</a>
@@ -48,7 +48,7 @@ XYB JPEG
 <p><a href="https://upload.wikimedia.org/wikipedia/commons/transcoded/3/34/Visible_gamut_within_CIEXYZ_color_space_D65_whitepoint_mesh.webm/Visible_gamut_within_CIEXYZ_color_space_D65_whitepoint_mesh.webm.480p.vp9.webm">xyz_visual</a>
 <em>Wikimedia Commons. CC BY-SA 4.0</em></p>
 <h3>XYB Color</h3>
-<p>Now, that's the <em>XYZ</em> color space. <a href="https://youtu.be/rvhf6feXw7w">XYB</a> is an LMS-based color space. LMS stands for long, medium, and short, representing the response our cones have to different visible spectra, &amp; is newer than XYZ. The same general principle of modeling colors based on our cone response still applies to both, though, &amp; I think talking about XYZ is the best way to explain perceptual color on a basic level. The labels on the cones_response SVG above show our L, M, &amp; S cones. A 3x3 matrix operation can be applied to LMS to produce XYB, &amp; you will find that XYB justifies allocating fewer bits to the S channel (blue) due to the <a href="https://en.wikipedia.org/wiki/LMS_color_space#Image_processing">lower density of blue cones in our eyes</a>. This allows perceptual quantization of color values that map better to our visual system, spending bits where we can see them instead of where they aren't salient to us. JPEG-XL already uses XYB internally.</p>
+<p>Now, that's the <em>XYZ</em> color space. <a href="https://youtu.be/rvhf6feXw7w">XYB</a> is an LMS-based color space. LMS stands for long, medium, and short, representing the response our cones have to different visible spectra, &amp; is newer than XYZ. The same general principle of modeling colors based on our cone response still applies to both, though, &amp; I think talking about XYZ is the best way to explain perceptual color on a basic level. The labels on the cones_response SVG above show our L, M, &amp; S cones. A 3x3 matrix operation can be applied to LMS to produce XYB, &amp; you will find that XYB justifies allocating fewer bits to the S channel (blue) due to the <a href="https://en.wikipedia.org/wiki/LMS_color_space#Image_processing">lower density of blue cones in our eyes</a>. This allows perceptual quantization of color values that map better to our visual system, spending bits where we can see them instead of where they aren't salient to us. JPEG XL already uses XYB internally.</p>
 <p>If you're interested in how jpegli works, see my <a href="https://giannirosato.com/blog/post/jpegli/">Mini Image Codec Comparison</a>.</p>
 <h2>Methodology</h2>
 <p>Here are the encoders I used for this test:</p>
