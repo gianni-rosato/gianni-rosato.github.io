@@ -1,10 +1,3 @@
-@font-face {
-    font-family: 'Monaspace Radon';
-    src: url('/fonts/MonaspaceRadon.woff2');
-    font-weight: unset;
-    font-style: normal;
-}
-
 code {
     font-family: "Monaspace Xenon", monospace;
     background-color: oklch(37% 0.01 75);
@@ -42,9 +35,8 @@ code {
 }
 
 .language-zig .token.class-name {
-    font-family: "Monaspace Xenon", monospace;
+    font-family: "Monaspace Xenon Bold", monospace;
     color: oklch(76% 0.2 0);
-    font-weight: bold;
 }
 
 .language-zig .token.function {
@@ -55,7 +47,6 @@ code {
 .language-zig .token.keyword {
     font-family: "Monaspace Xenon", monospace;
     color: oklch(76% 0.23 158);
-    font-weight: normal;
 }
 
 .language-zig .token.number {
@@ -76,13 +67,11 @@ code {
 .language-zig .token.comment {
     font-family: "Monaspace Radon", monospace;
     color: oklch(76% 0.05 75);
-    font-style: normal;
 }
 
 .language-zig .token.builtin {
     font-family: "Monaspace Xenon", monospace;
     color: oklch(76% 0.207 317);
-    font-weight: normal;
 }
 
 .language-zig .token.string {
