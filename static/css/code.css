@@ -3,7 +3,7 @@ code {
     background-color: oklch(37% 0.01 75);
     color: oklch(95% 0.05 75);
     padding: 1px 3px;
-    font-size: 14px;
+    font-size: 0.875rem;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
@@ -15,7 +15,7 @@ code {
     padding: 14px;
     margin: 0 0 18px;
     line-height: 16px;
-    font-size: 12px;
+    font-size: 0.75rem;
     border: 1px solid oklch(39% 0.01 75);
     border-radius: 10px;
     background-color: oklch(37% 0.01 75);
@@ -25,13 +25,14 @@ code {
  pre code {
     font-family: "Monaspace Xenon", monospace;
     background-color: oklch(37% 0.01 75);
-    font-size: 14px;
+    font-size: 0.875rem;
     padding: 0;
  }
 
-.language-zig {
+.language-zig * {
     font-family: "Monaspace Xenon", monospace;
     color: oklch(95% 0.05 75);
+    font-size: 0.875rem;
 }
 
 .language-zig .token.class-name {

@@ -26,7 +26,7 @@
     font-style: normal;
 }
 @font-face {
-    font-family: 'Young Serif';
+    font-family: 'Sorts Mill Goudy';
     src: url('/fonts/SortsMillGoudy.woff2') format("woff2");
     font-display: swap;
     font-weight: unset;
@@ -41,7 +41,7 @@
 }
 
 .page-title {
-    font-family: 'Young Serif', serif;
+    font-family: 'Sorts Mill Goudy', serif;
     display: inline-grid;
     font-size: 2.5rem;
     font-weight: unset;
@@ -49,7 +49,7 @@
 }
 
 .title {
-    font-family: 'Young Serif', serif;
+    font-family: 'Sorts Mill Goudy', serif;
     display: inline-grid;
     font-size: 2.25rem;
     font-weight: unset;
@@ -76,7 +76,7 @@ body * {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Young Serif', serif;
+    font-family: 'Sorts Mill Goudy', serif;
     line-height: 1;
     margin-top: 8px;
     margin-bottom: 12px;
