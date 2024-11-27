@@ -1,54 +1,54 @@
 .image-container {
-    width: 100%;
-    position: relative;
+  width: 100%;
+  position: relative;
 }
 
 .image-container img {
-    border: 1px solid oklch(39% 0.01 75);
-    margin-top: 0px;
-    border-radius: 10px;
-    max-width: 100%;
-    height: auto;
+  border: 1px solid oklch(39% 0.01 75);
+  margin-top: 0px;
+  border-radius: 10px;
+  max-width: 100%;
+  height: auto;
 }
 
 .controls {
-    margin-top: -19px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
+  margin-top: -19px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .text-container {
-    margin-top: 1px;
-    margin-left: 4px;
-    font-size: 12px;
-    margin-bottom: 0px
+  margin-top: 1px;
+  margin-left: 4px;
+  font-size: 12px;
+  margin-bottom: 0px;
 }
 
 .text-container * {
-    font-size: 12px;
-    margin-bottom: 8px;
+  font-size: 12px;
+  margin-bottom: 8px;
 }
 
 .button-container {
-    display: flex;
-    justify-content: right;
-    margin-top: 8px;
+  display: flex;
+  justify-content: right;
+  margin-top: 8px;
 }
 
 .btn {
-    background-color: oklch(37% 0.01 75);
-    border: 1px solid oklch(39% 0.01 75);
-    border-radius: 12px;
-    margin: 0px 0px 0px 10px;
-    padding: 4px 10px;
-    font-size: 12px;
-    cursor: pointer;
+  background-color: oklch(37% 0.01 75);
+  border: 1px solid oklch(39% 0.01 75);
+  border-radius: 12px;
+  margin: 0px 0px 0px 10px;
+  padding: 4px 10px;
+  font-size: 12px;
+  cursor: pointer;
 }
 
 .btn:hover {
-	background-color: oklch(35% 0.01 75);
-    color: oklch(95% 0.05 75);
-    text-decoration: none;
+  background-color: oklch(35% 0.01 75);
+  color: oklch(95% 0.05 75);
+  text-decoration: none;
 }

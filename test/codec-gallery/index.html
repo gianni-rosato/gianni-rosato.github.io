@@ -1,124 +1,201 @@
 <!DOCTYPE html>
 
 <html>
-
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>
-            Modern Codec Gallery
-        </title>
-        <link href="/static/favicon.webp" rel="icon">
-        <link href="/static/css/reset.css" rel="stylesheet">
-        <link href="/static/css/main.css" rel="stylesheet">
-        <link href="/static/css/markdown.css" rel="stylesheet">
-        <link href="/static/css/image-switcher.css" rel="stylesheet">
-    </head>
-    <body>
-<div class="center">
-
-    <div class="post-header">
-        <div class="title" style="display: inline-grid;">HDR Video/Image Test</div>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>
+      Modern Codec Gallery
+    </title>
+    <link href="/static/favicon.webp" rel="icon" />
+    <link href="/static/css/main.css" rel="stylesheet" />
+    <link href="/static/css/markdown.css" rel="stylesheet" />
+    <link href="/static/css/image-switcher.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="center">
+      <div class="post-header">
+        <div class="title" style="display: inline-grid">
+          HDR Video/Image Test
+        </div>
         <div class="date">Mar 1, 2024</div>
-    </div>
-    <div class="button-container-left">
+      </div>
+      <div class="button-container-left">
         <a href="/blog/" class="button-blog">Blog</a>
         <a href="/" class="button-blog">Home</a>
-    </div>
+      </div>
 
-    <h2>Modern Codec Gallery</h2>
+      <h2>Modern Codec Gallery</h2>
 
-    <h4>"Sand"</h4>
-    <p>1885x1260</p>
-    <div class="image-container">
-        <img id="main-image" src="/static/images/sand_demo/sand_demo_lossless.jxl" alt="12-bit Lossless JPEG XL">
-    </div>
-    <div class="controls">
+      <h4>"Sand"</h4>
+      <p>1885x1260</p>
+      <div class="image-container">
+        <img
+          id="main-image"
+          src="/static/images/sand_demo/sand_demo_lossless.jxl"
+          alt="12-bit Lossless JPEG XL"
+        />
+      </div>
+      <div class="controls">
         <div class="text-container">
-            <p id="text-box">Source | 12-bit | 8.0 MiB | Lossless</p>
+          <p id="text-box">Source | 12-bit | 8.0 MiB | Lossless</p>
         </div>
         <div class="button-container">
-            <button class="btn"
-                    data-image="/static/images/sand_demo/sand_demo_lossless.jxl"
-                    data-text="Source | 12-bit | 8.0 MiB | Lossless">Source</button>
-            <button class="btn"
-                    data-image="/static/images/sand_demo/sand_demo_lossy.jpg"
-                    data-text="JPEG | 8-bit | 796 KiB | 75.02 SSIMULACRA2">JPEG</button>
-            <button class="btn"
-                    data-image="/static/images/sand_demo/sand_demo_lossy.webp"
-                    data-text="WebP | 8-bit | 2.0 MiB | 75.04 SSIMULACRA2">WebP</button>
-            <button class="btn"
-                    data-image="/static/images/sand_demo/sand_demo_lossy.avif"
-                    data-text="AVIF | 10-bit | 2.1 MiB | 74.75 SSIMULACRA2">AVIF</button>
-            <button class="btn"
-                    data-image="/static/images/sand_demo/sand_demo_lossy-xyb.jpg"
-                    data-text="XYB JPEG | 8-bit | 880 KiB | 75.04 SSIMULACRA2">XYB JPEG</button>
-            <button class="btn"
-                    data-image="/static/images/sand_demo/sand_demo_lossy.jxl"
-                    data-text="JPEG XL | 12-bit | 668 KiB | 75.04 SSIMULACRA2">JPEG XL</button>
+          <button
+            class="btn"
+            data-image="/static/images/sand_demo/sand_demo_lossless.jxl"
+            data-text="Source | 12-bit | 8.0 MiB | Lossless"
+          >
+            Source
+          </button>
+          <button
+            class="btn"
+            data-image="/static/images/sand_demo/sand_demo_lossy.jpg"
+            data-text="JPEG | 8-bit | 796 KiB | 75.02 SSIMULACRA2"
+          >
+            JPEG
+          </button>
+          <button
+            class="btn"
+            data-image="/static/images/sand_demo/sand_demo_lossy.webp"
+            data-text="WebP | 8-bit | 2.0 MiB | 75.04 SSIMULACRA2"
+          >
+            WebP
+          </button>
+          <button
+            class="btn"
+            data-image="/static/images/sand_demo/sand_demo_lossy.avif"
+            data-text="AVIF | 10-bit | 2.1 MiB | 74.75 SSIMULACRA2"
+          >
+            AVIF
+          </button>
+          <button
+            class="btn"
+            data-image="/static/images/sand_demo/sand_demo_lossy-xyb.jpg"
+            data-text="XYB JPEG | 8-bit | 880 KiB | 75.04 SSIMULACRA2"
+          >
+            XYB JPEG
+          </button>
+          <button
+            class="btn"
+            data-image="/static/images/sand_demo/sand_demo_lossy.jxl"
+            data-text="JPEG XL | 12-bit | 668 KiB | 75.04 SSIMULACRA2"
+          >
+            JPEG XL
+          </button>
         </div>
         <script src="/static/js/image-switcher.min.js"></script>
-    </div>
+      </div>
 
-    <!--TODO: fix values here, & fix script not working-->
-    <h4>"Marsh"</h4>
-    <p>720x480</p>
-    <div class="image-container">
-        <img id="main-image" src="/static/images/marsh_demo/marsh.jxl" alt="12-bit Lossless JPEG XL">
-    </div>
-    <div class="controls">
+      <!--TODO: fix values here, & fix script not working-->
+      <h4>"Marsh"</h4>
+      <p>720x480</p>
+      <div class="image-container">
+        <img
+          id="main-image"
+          src="/static/images/marsh_demo/marsh.jxl"
+          alt="12-bit Lossless JPEG XL"
+        />
+      </div>
+      <div class="controls">
         <div class="text-container">
-            <p id="text-box">Source | 12-bit | 872K | Lossless</p>
+          <p id="text-box">Source | 12-bit | 872K | Lossless</p>
         </div>
         <div class="button-container">
-            <button class="btn"
-                    data-image="/static/images/marsh_demo/marsh.jxl"
-                    data-text="Source | 12-bit | 2.7 MiB | Lossless">Source</button>
-            <button class="btn"
-                    data-image="/static/images/marsh_demo/marsh-jpg.jpg"
-                    data-text="JPEG | 8-bit | 36K | 69.94 SSIMULACRA2">JPEG</button>
-            <button class="btn"
-                    data-image="/static/images/marsh_demo/marsh-avif.avif"
-                    data-text="AVIF | 10-bit | 72K | 70.03 SSIMULACRA2">AVIF</button>
-            <button class="btn"
-                    data-image="/static/images/marsh_demo/marsh-xyb.jpg"
-                    data-text="XYB JPEG | 8-bit | 32K | 70.11 SSIMULACRA2">XYB JPEG</button>
-            <button class="btn"
-                    data-image="/static/images/marsh_demo/marsh-jxl.jxl"
-                    data-text="JPEG XL | 12-bit | 40K | 70.18 SSIMULACRA2">JPEG XL</button>
+          <button
+            class="btn"
+            data-image="/static/images/marsh_demo/marsh.jxl"
+            data-text="Source | 12-bit | 2.7 MiB | Lossless"
+          >
+            Source
+          </button>
+          <button
+            class="btn"
+            data-image="/static/images/marsh_demo/marsh-jpg.jpg"
+            data-text="JPEG | 8-bit | 36K | 69.94 SSIMULACRA2"
+          >
+            JPEG
+          </button>
+          <button
+            class="btn"
+            data-image="/static/images/marsh_demo/marsh-avif.avif"
+            data-text="AVIF | 10-bit | 72K | 70.03 SSIMULACRA2"
+          >
+            AVIF
+          </button>
+          <button
+            class="btn"
+            data-image="/static/images/marsh_demo/marsh-xyb.jpg"
+            data-text="XYB JPEG | 8-bit | 32K | 70.11 SSIMULACRA2"
+          >
+            XYB JPEG
+          </button>
+          <button
+            class="btn"
+            data-image="/static/images/marsh_demo/marsh-jxl.jxl"
+            data-text="JPEG XL | 12-bit | 40K | 70.18 SSIMULACRA2"
+          >
+            JPEG XL
+          </button>
         </div>
         <script src="/static/js/image-switcher.min.js"></script>
-    </div>
+      </div>
 
-    <h4>"Pixel"</h4>
-    <p>1440x960</p>
-    <div class="image-container">
-        <img id="main-image" src="/static/images/pixel_demo/pixel.jxl" alt="12-bit Lossless JPEG XL">
-    </div>
-    <div class="controls">
+      <h4>"Pixel"</h4>
+      <p>1440x960</p>
+      <div class="image-container">
+        <img
+          id="main-image"
+          src="/static/images/pixel_demo/pixel.jxl"
+          alt="12-bit Lossless JPEG XL"
+        />
+      </div>
+      <div class="controls">
         <div class="text-container">
-            <p id="text-box">Source | 12-bit | 872K | Lossless</p>
+          <p id="text-box">Source | 12-bit | 872K | Lossless</p>
         </div>
         <div class="button-container">
-            <button class="btn"
-                    data-image="/static/images/pixel_demo/pixel.jxl"
-                    data-text="Source | 12-bit | 2.7 MiB | Lossless">Source</button>
-            <button class="btn"
-                    data-image="/static/images/pixel_demo/pixel-jpg.jpg"
-                    data-text="JPEG | 8-bit | 36K | 69.94 SSIMULACRA2">JPEG</button>
-            <button class="btn"
-                    data-image="/static/images/pixel_demo/pixel-avif.avif"
-                    data-text="AVIF | 10-bit | 20K | 70.03 SSIMULACRA2">AVIF</button>
-            <button class="btn"
-                    data-image="/static/images/pixel_demo/pixel-xyb.jpg"
-                    data-text="XYB JPEG | 8-bit | 32K | 70.11 SSIMULACRA2">XYB JPEG</button>
-            <button class="btn"
-                    data-image="/static/images/pixel_demo/pixel-jxl.jxl"
-                    data-text="JPEG XL | 12-bit | 16K | 70.18 SSIMULACRA2">JPEG XL</button>
+          <button
+            class="btn"
+            data-image="/static/images/pixel_demo/pixel.jxl"
+            data-text="Source | 12-bit | 2.7 MiB | Lossless"
+          >
+            Source
+          </button>
+          <button
+            class="btn"
+            data-image="/static/images/pixel_demo/pixel-jpg.jpg"
+            data-text="JPEG | 8-bit | 36K | 69.94 SSIMULACRA2"
+          >
+            JPEG
+          </button>
+          <button
+            class="btn"
+            data-image="/static/images/pixel_demo/pixel-avif.avif"
+            data-text="AVIF | 10-bit | 20K | 70.03 SSIMULACRA2"
+          >
+            AVIF
+          </button>
+          <button
+            class="btn"
+            data-image="/static/images/pixel_demo/pixel-xyb.jpg"
+            data-text="XYB JPEG | 8-bit | 32K | 70.11 SSIMULACRA2"
+          >
+            XYB JPEG
+          </button>
+          <button
+            class="btn"
+            data-image="/static/images/pixel_demo/pixel-jxl.jxl"
+            data-text="JPEG XL | 12-bit | 16K | 70.18 SSIMULACRA2"
+          >
+            JPEG XL
+          </button>
         </div>
         <script src="/static/js/image-switcher.min.js"></script>
+      </div>
     </div>
-
-</div>
-    </body>
+  </body>
 </html>
