@@ -203,9 +203,9 @@
       </p>
       <a href="https://github.com/google/butteraugli">Butteraugli</a>
       <p>
-        The way we use Butteraugli in <code>metrics</code>, we use 3 p-norm,
-        which weighs and averages certain parts of the frame, leaning toward
-        more noticeable differences. So for our use case:
+        The way we use Butteraugli in <code>metrics</code>, we use 3pnorm, which
+        weighs and averages certain parts of the frame, leaning toward more
+        noticeable differences. So for our use case:
       </p>
       <ul>
         <li>The "Distance" is the average of per-frame 3pnorm scores</li>
@@ -353,6 +353,10 @@
         src="/static/images/encoder_efficiency.svg"
         alt="SVT-AV1 BD-Rate Plot"
       >
+      <p>
+        <em>BD-Rates computed relative to SVT-AV1-PSY v2.3.0-B's Preset 10,
+          which is why that data point has a BD-Rate of 0%.</em>
+      </p>
       <p>
         You can see that SVT-AV1 v3.0.0 is able to produce smaller BD-Rates
         relative to v2.3.0-B in less time, so it would be considered the more
