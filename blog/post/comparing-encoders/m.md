@@ -91,7 +91,7 @@ there haven't been any studies on how well it actually performs, but we're
 reporting it here anyway. Let's just assume it is good for the sake of this
 discussion. Here is the rationale behind each statistic:
 
-- The average, or the arithmetic mean, is simple, and easy to understand; now we
+- The average, or the arithmetic mean, is simple and easy to understand; now we
   know how our frames look, on average, according to an image metric.
 - The harmonic mean pulls our average down toward the lower scores present in
   our per-frame score dataset that we're interpreting. This is theoretically a
@@ -116,7 +116,7 @@ averages certain parts of the frame, leaning toward more noticeable differences.
 So for our use case:
 
 - The "Distance" is the average of per-frame 3pnorm scores
-- the "Max Distance" is the maximum 3pnorm score we saw in a frame
+- The "Max Distance" is the maximum 3pnorm score we saw in a frame
 
 And finally, Weighted XPSNR, or W-XPSNR. This is kind of simple:
 
@@ -175,8 +175,8 @@ Rounding our results to integers (necessary with current SVT-AV1) gave us 5 CRF
 values between 20 and 30, according to my input. We use this formula to focus
 more of our data points on higher fidelity encodes, where the difference in
 filesize may be larger for smaller differences in fidelity. This is more helpful
-when worknig with much higher fidelity than we care about here, but it is a good
-thing to remember, because we want a curve with less data points to look more
+when working with much higher fidelity than we care about here, but it is a good
+thing to remember, because we want a curve with fewer data points to look more
 like one with a greater number of data points.
 
 Now, we can compare encoders by generating multiple curves. We have the data,
