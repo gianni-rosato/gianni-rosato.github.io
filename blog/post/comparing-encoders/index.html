@@ -152,7 +152,6 @@
 <code>
      SSIMULACRA2 scores for every 1 frame:
      Average:       75.22395
-     Harmonic Mean: 75.08624
      Std Deviation: 3.19206
      10th Pctile:   70.52215
      Butteraugli scores for every 1 frame:
@@ -174,20 +173,18 @@
       <a href="https://wiki.x266.mov/docs/metrics/SSIMULACRA2">SSIMULACRA2</a>
       <ul>
         <li>
-          The average, or the arithmetic mean, is simple and easy to understand;
-          now we know how our frames look, on average, according to an image
-          metric.
+          The average, or the arithmetic mean, is simple; now we know how our
+          frames look, on average, according to an image metric.
         </li>
         <li>
-          The harmonic mean pulls our average down toward the lower scores
+          The harmonic mean could pull our average down toward the lower scores
           present in our per-frame score dataset that we're interpreting. This
           is theoretically a bit more informative than the average, as our eyes
           are going to be more sensitive to variability in the video's fidelity,
           so we make consistency desirable by favoring the lower-scoring frames.
-          Note that we do some <a
-            href="https://github.com/psy-ex/metrics?tab=readme-ov-file#harmonic-mean"
-          >funky stuff</a> to allow the harmonic mean to account for negative
-          values with our use case.
+          Note that we haven't reported the harmonic mean with SSIMULACRA2 here,
+          as SSIMULACRA2 is capable of producing negative scores which are
+          incompatible with the harmonic mean.
         </li>
         <li>
           The standard deviation tells us more about the video's consistency.
