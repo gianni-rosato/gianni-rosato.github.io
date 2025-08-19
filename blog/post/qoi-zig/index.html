@@ -274,8 +274,7 @@
         enum, for instance, defines the different opcodes used in the QOI
         format, such as <code>QOI_OP_RGB</code> and <code>QOI_OP_RGBA</code>:
       </p>
-      <pre
-      >
+      <pre>
 <code class="language-zig">const QoiEnum = enum(u8) {
 
     QOI_OP_RGB = 0xFE,
@@ -285,8 +284,7 @@
     QOI_OP_LUMA = 0x80,
     QOI_OP_RUN = 0xC0,
 
-};</code></pre
-      >
+};</code></pre>
       <p>
         These are fundamental to the QOI format&#39;s compression techniques,
         which we&#39;ll explore in a bit.
@@ -299,8 +297,7 @@
         access them as a single unsigned 32-bit integer through <code
         >concatenated_pixel_values</code>:
       </p>
-      <pre
-      >
+      <pre>
 <code class="lang-zig">const QoiPixel = extern <span class="hljs-class"><span class="hljs-keyword">union</span> {</span>
     <span class="hljs-symbol">vals:</span> extern <span class="hljs-class"><span class="hljs-keyword">struct</span> {</span>
         <span class="hljs-symbol">red:</span> u8,
@@ -311,8 +308,7 @@
     <span class="hljs-symbol">channels:</span> [<span class="hljs-number">4</span>]u8,
     <span class="hljs-symbol">concatenated_pixel_values:</span> u32,
 };
-</code></pre
-      >
+</code></pre>
       <p>
         Important to note here is that the <code>extern</code> keyword defines
         the union (and the enclosed struct) as C ABI compatible data structures.
@@ -335,8 +331,7 @@
         struct provides methods for assigning our instance of <code
         >QoiDesc</code> &amp; writing the QOI header to the output file:
       </p>
-      <pre
-      >
+      <pre>
 <code class="lang-zig"><span class="hljs-keyword">const</span> QoiDesc = <span class="hljs-class"><span class="hljs-keyword">struct</span> {</span>
     width: <span class="hljs-keyword">u32</span> = <span class="hljs-number">0</span>,
     height: <span class="hljs-keyword">u32</span> = <span class="hljs-number">0</span>,
@@ -351,8 +346,7 @@
         <span class="hljs-comment">// ... (implementation omitted for brevity)</span>
     }
 };
-</code></pre
-      >
+</code></pre>
       <p>
         Struct methods in Zig are not super different from normal functions.
         According to Zig&#39;s website:
@@ -370,16 +364,14 @@
         makes the codebase nice and neat. You can also call methods with dot
         syntax, which feels tidy:
       </p>
-      <pre
-      >
+      <pre>
 <code class="lang-zig">// <span class="hljs-keyword">Declare</span> <span class="hljs-keyword">variable</span> <span class="hljs-string">`desc`</span> providing width, height, channels, colorspace.
 // We can <span class="hljs-keyword">call</span> this method <span class="hljs-keyword">using</span> dot syntax <span class="hljs-keyword">on</span> the <span class="hljs-keyword">type</span>:
     <span class="hljs-keyword">var</span> <span class="hljs-keyword">desc</span> = QoiDesc.qoiSetEverything(width, height, channels, colorspace);
 // Now, we <span class="hljs-keyword">use</span> dot syntax <span class="hljs-keyword">on</span> the <span class="hljs-string">`desc`</span> <span class="hljs-keyword">variable</span> <span class="hljs-keyword">to</span> <span class="hljs-keyword">call</span> the
 // <span class="hljs-string">`writeQoiHeader`</span> method, <span class="hljs-keyword">where</span> <span class="hljs-string">`desc`</span> <span class="hljs-keyword">is</span> passed <span class="hljs-keyword">to</span> the method <span class="hljs-keyword">as</span> <span class="hljs-string">`self`</span>:
     desc.writeQoiHeader(qoi_file[<span class="hljs-number">0.</span><span class="hljs-number">.14</span>]);
-</code></pre
-      >
+</code></pre>
       <p>
         You don&#39;t need to do <code>foo-&gt;bar</code> like in C, either; Zig
         will do that automatically if you just do <code>foo.bar</code>. I like
@@ -388,12 +380,11 @@
       <p>
         The <code>QoiEnc</code> struct encapsulates the encoding logic. It
         maintains a pixel buffer, a run counter, and various other state
-        variables necessary for the encoding process. The <code>qoiEncInit</code
-        > method initializes the encoder with the image description &amp; an
-        output buffer:
+        variables necessary for the encoding process. The <code
+        >qoiEncInit</code> method initializes the encoder with the image
+        description &amp; an output buffer:
       </p>
-      <pre
-      >
+      <pre>
 <code class="lang-zig"><span class="hljs-keyword">const</span> QoiEnc = <span class="hljs-class"><span class="hljs-keyword">struct</span> {</span>
     buffer: [<span class="hljs-number">64</span>]QoiPixel,
     prev_pixel: QoiPixel,
@@ -413,8 +404,7 @@
 
     <span class="hljs-comment">// ... (other methods omitted for brevity, but there are a bunch)</span>
 };
-</code></pre
-      >
+</code></pre>
       <p>
         Now, remember the types of pixels allowed in QOI that we enumerated
         earlier? The <code>QoiEnc</code> struct provides separate methods for
@@ -426,8 +416,7 @@
         Let&#39;s take a closer look at the <code>qoiEncRun</code> method, which
         handles run-length encoding:
       </p>
-      <pre
-      >
+      <pre>
 <code class="lang-zig"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">qoiEncRun</span></span>(<span class="hljs-keyword">self</span>: *QoiEnc) void {
     <span class="hljs-keyword">const</span> tag: <span class="hljs-keyword">u8</span> = @intFromEnum(QoiEnum.QOI_OP_RUN) | (<span class="hljs-keyword">self</span>.run - <span class="hljs-number">1</span>);
     <span class="hljs-keyword">self</span>.run = <span class="hljs-number">0</span>;
@@ -435,8 +424,7 @@
     <span class="hljs-keyword">self</span>.offset[<span class="hljs-number">0</span>] = tag;
     <span class="hljs-keyword">self</span>.offset += <span class="hljs-number">1</span>;
 }
-</code></pre
-      >
+</code></pre>
       <p>
         This is a <em>&quot;Run pixel&quot;</em> which is the simplest kind of
         pixel conceptually within QOI, in my opinion.
@@ -450,8 +438,7 @@
         The <code>qoiEncLuma</code> method, on the other hand, handles encoding
         <em>&quot;Luma Pixels&quot;</em>:
       </p>
-      <pre
-      >
+      <pre>
 <code class="lang-zig"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">qoiEncLuma</span></span>(<span class="hljs-keyword">self</span>: *QoiEnc, green_diff: <span class="hljs-keyword">i8</span>, dr_dg: <span class="hljs-keyword">i8</span>, db_dg: <span class="hljs-keyword">i8</span>) void {
     <span class="hljs-keyword">const</span> green_diff_biased: <span class="hljs-keyword">u8</span> = @intCast(green_diff + <span class="hljs-number">32</span>);
     <span class="hljs-keyword">const</span> dr_dg_biased: <span class="hljs-keyword">u8</span> = @intCast(dr_dg + <span class="hljs-number">8</span>);
@@ -462,8 +449,7 @@
     <span class="hljs-keyword">for</span> (tags, <span class="hljs-number">0</span>..) |tag, i| <span class="hljs-keyword">self</span>.offset[i] = tag;
     <span class="hljs-keyword">self</span>.offset += tags.len;
 }
-</code></pre
-      >
+</code></pre>
       <p>
         This method calculates the differences between the red, green, and blue
         channels of the current pixel and the previous pixel. It then encodes
@@ -474,8 +460,7 @@
         Encoding &quot;Diff Pixels&quot; with <code>qoiEncDifference</code> is a
         similar story:
       </p>
-      <pre
-      >
+      <pre>
 <code class="lang-zig">    fn qoiEncDifference(<span class="hljs-string">enc:</span> *QoiEnc, <span class="hljs-string">red_diff:</span> i32, <span class="hljs-string">green_diff:</span> i32, <span class="hljs-string">blue_diff:</span> i32) <span class="hljs-keyword">void</span> {
         const <span class="hljs-string">green_diff_biased:</span> u8 = <span class="hljs-meta">@intCast</span>(green_diff + <span class="hljs-number">2</span>);
         const <span class="hljs-string">red_diff_biased:</span> u8 = <span class="hljs-meta">@intCast</span>(red_diff + <span class="hljs-number">2</span>);
@@ -491,8 +476,7 @@
 
         enc.offset += <span class="hljs-number">1</span>;
     }
-</code></pre
-      >
+</code></pre>
       <p>
         The bit manipulations for properly writing to <code>enc.offset</code>
         felt a bit intimidating, and to be honest, they still do &amp; probably
@@ -507,8 +491,7 @@
         Now, let&#39;s look at encoding &quot;RGB Pixels&quot; &amp; &quot;RGBA
         Pixels&quot; with <code>qoiEncFullColor</code>:
       </p>
-      <pre
-      >
+      <pre>
 <code class="lang-zig">    fn qoiEncFullColor(enc: *QoiEnc, px: QoiPixel, channels: u8) <span class="hljs-keyword">void</span> {
         var s: u3 = <span class="hljs-number">0</span>;
         <span class="hljs-keyword">if</span> (channels &gt; <span class="hljs-number">3</span>) s = <span class="hljs-number">5</span> <span class="hljs-keyword">else</span> s = <span class="hljs-number">4</span>;
@@ -529,8 +512,7 @@
         <span class="hljs-keyword">for</span> (tags[<span class="hljs-number">0.</span>.s], <span class="hljs-number">0.</span>.s) |tag, i| enc.offset[i] = tag;
         enc.offset += s;
     }
-</code></pre
-      >
+</code></pre>
       <p>
         Here, we have some trademark &quot;Zigginess&quot;. Let&#39;s walk
         through it:
@@ -558,15 +540,13 @@
           list literal</em>. These confused me greatly when first learning Zig,
         but it makes a bit more sense looking at a more concise example:
       </p>
-      <pre
-      >
+      <pre>
 <code class="lang-zig">// Initialize an<span class="hljs-built_in"> array </span>with<span class="hljs-built_in"> array </span>literal syntax. Compiler infers size
    <span class="hljs-built_in"> const </span>arr_a = [_]i6{6, 7, 8};
 // Initialize an<span class="hljs-built_in"> array </span>with an anonymous list literal. Compiler cannot
 // infer size, as it isn't aware of the anonymous list literal
    <span class="hljs-built_in"> const </span>arr_b: [3]i6 = .{6, 7, 8};
-</code></pre
-      >
+</code></pre>
       <p>
         Now we can observe the <code>for</code> loop at the end of the function
         block. I like the way Zig handles for loops, essentially leaving
@@ -594,23 +574,21 @@
         multi-pointer.
       </p>
       <p>
-        This felt pretty cool, to have <code>for</code> loops and <code>if</code
-        > statements so gracefully doing my bidding based on little <code
-        >s</code>.
+        This felt pretty cool, to have <code>for</code> loops and <code
+        >if</code> statements so gracefully doing my bidding based on little
+        <code>s</code>.
       </p>
       <p>
         How about we take a look at encoding &quot;Hashed Pixels&quot; next, now
         that we&#39;re getting the hang of things?
       </p>
-      <pre
-      >
+      <pre>
 <code class="lang-zig">    fn qoiEncIndex(<span class="hljs-string">enc:</span> *QoiEnc, <span class="hljs-string">index_pos:</span> u8) <span class="hljs-keyword">void</span> {
         const <span class="hljs-string">tag:</span> u8 = <span class="hljs-meta">@intFromEnum</span>(QoiEnum.QOI_OP_INDEX) | index_pos;
         enc.offset[<span class="hljs-number">0</span>] = tag;
         enc.offset += <span class="hljs-number">1</span>;
     }
-</code></pre
-      >
+</code></pre>
       <p>
         This is pretty straightforward. We calculate the hash itself outside of
         the function with <code>const index_pos: u6 =
@@ -634,8 +612,7 @@
         the differences between the pixels. The encoded data is then written to
         the output buffer using the respective encoding methods:
       </p>
-      <pre
-      >
+      <pre>
 <code class="lang-zig">fn qoiEncodeChunk(<span class="hljs-keyword">desc</span>: *QoiDesc, <span class="hljs-keyword">enc</span>: *QoiEnc, qoi_pixel_bytes: [*]u8) void {
     <span class="hljs-keyword">var</span> cur_pixel: QoiPixel = undefined;
 
@@ -668,8 +645,7 @@
     <span class="hljs-comment">// Handle padding at the end of the image once it is time to do so</span>
     <span class="hljs-comment">// ...</span>
 }
-</code></pre
-      >
+</code></pre>
       <p>
         You can see the <code>index_pos</code> hash calculation in there, where
         it happens, and what triggers it. Hopefully, everything else is clear,
@@ -690,8 +666,7 @@
         they are returned. I&#39;d like to expand on error unions more, but
         I&#39;ll save that for another article.
       </p>
-      <pre
-      >
+      <pre>
 <code class="lang-zig">pub fn main() !void {
     <span class="hljs-comment">// Get allocator</span>
     <span class="hljs-keyword">var</span> gpa = std.heap.GeneralPurposeAllocator(.{}){};
@@ -776,8 +751,7 @@
         <span class="hljs-keyword">print</span>(<span class="hljs-string">"\n"</span>, .{});
     }
 }
-</code></pre
-      >
+</code></pre>
       <p>
         That&#39;s it, the entire <code>main</code> function. It could probably
         be made even more concise with some code golfing, but for now, I&#39;m

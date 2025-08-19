@@ -92,13 +92,9 @@
         AV1.
       </p>
 
-      <pre
-      ><code>ffmpeg -ss 00:01:22 -i input.webm -frames:v 1 -vf scale=2240:1260:flags=bicubic:param0=0:param1=1/2 -color_primaries bt2020 -colorspace 9 -color_range tv -c:v librav1e -an -qp 60 -speed 8 -tiles 4 -color_trc smpte2084 -color_primaries bt2020 -colorspace 9 -color_range tv -r 1 av1.webm</code></pre
-      >
+      <pre><code>ffmpeg -ss 00:01:22 -i input.webm -frames:v 1 -vf scale=2240:1260:flags=bicubic:param0=0:param1=1/2 -color_primaries bt2020 -colorspace 9 -color_range tv -c:v librav1e -an -qp 60 -speed 8 -tiles 4 -color_trc smpte2084 -color_primaries bt2020 -colorspace 9 -color_range tv -r 1 av1.webm</code></pre>
 
-      <pre
-      ><code>ffmpeg -ss 00:01:22 -i input.webm -frames:v 1 -vf scale=1920:1080:flags=bicubic:param0=0:param1=1/2 -color_primaries bt2020 -colorspace 9 -color_range tv -c:v libx265 -an -crf 17 -preset veryslow -color_trc smpte2084 -color_primaries bt2020 -colorspace 9 -color_range tv -r 1 -tag:v hvc1 hevc.mp4</code></pre
-      >
+      <pre><code>ffmpeg -ss 00:01:22 -i input.webm -frames:v 1 -vf scale=1920:1080:flags=bicubic:param0=0:param1=1/2 -color_primaries bt2020 -colorspace 9 -color_range tv -c:v libx265 -an -crf 17 -preset veryslow -color_trc smpte2084 -color_primaries bt2020 -colorspace 9 -color_range tv -r 1 -tag:v hvc1 hevc.mp4</code></pre>
 
       <h2>Implications</h2>
 

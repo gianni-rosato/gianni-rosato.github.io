@@ -113,8 +113,7 @@
         >matdoes.dev/buttons</a>. We'll cover animations later.
       </p>
       <p>We have ourselves a combined dataset of GIFs and PNGs here.</p>
-      <pre
-      >
+      <pre>
 <code>
 originals/9.png: 1339 bytes
 originals/4.gif: 3058 bytes
@@ -131,8 +130,7 @@ originals/10.gif: 2523 bytes
 Total size: 16941 bytes
 Number of items: 12
 Average size: 1411 bytes
-	</code></pre
-      >
+	</code></pre>
       <p>
         We're weighing in at an average of 1411 bytes per image. That's not too
         bad, but we can do better even with the most basic, low-effort PNG
@@ -142,8 +140,7 @@ Average size: 1411 bytes
         Using <code>magick -quality 0</code> we can get some PNGs out of the
         static GIFs. Here's the effect on the filesize:
       </p>
-      <pre
-      >
+      <pre>
 <code>
 png_unoptim/9.png: 1339 bytes
 png_unoptim/12.png: 389 bytes
@@ -160,8 +157,7 @@ png_unoptim/3.png: 1213 bytes
 Total size: 16816 bytes
 Number of items: 12
 Average size: 1401 bytes
-	</code></pre
-      >
+	</code></pre>
       <p>
         Even low effort, completely unoptimized PNG beats GIF here on average.
         GIF sucks, please don't use GIF.
@@ -170,8 +166,7 @@ Average size: 1401 bytes
         Now let's see what happens if we use <code>ect -9 --mt-deflate
           -strip</code> on the PNGs:
       </p>
-      <pre
-      >
+      <pre>
 <code>
 png_ect9/9.png: 1326 bytes
 png_ect9/12.png: 369 bytes
@@ -188,16 +183,14 @@ png_ect9/3.png: 1006 bytes
 Total size: 14510 bytes
 Number of items: 12
 Average size: 1209 bytes
-	</code></pre
-      >
+	</code></pre>
       <p>
         It doesn't seem like a crazy difference, but considering how little
         flexibility we have with such tiny images, it is pretty impressive that
         we're looking at the same exact format and the same image data.
       </p>
       <p>Let's take it a step further with <code>ect -9999 -strip</code>:</p>
-      <pre
-      >
+      <pre>
 <code>
 png_ect9/9.png: 1324 bytes
 png_ect9/12.png: 368 bytes
@@ -214,8 +207,7 @@ png_ect9/3.png: 1003 bytes
 Total size: 14479 bytes
 Number of items: 12
 Average size: 1206 bytes
-	</code></pre
-      >
+	</code></pre>
       <p>
         Look at that, a <em>teensy</em> bit more off. This is pretty much right
         up against the ceiling of what PNG can do for us without lossy
@@ -257,8 +249,7 @@ Average size: 1206 bytes
         picks the smallest one, as effort 9 isn't always the smallest for some
         reason. Here's the result:
       </p>
-      <pre
-      >
+      <pre>
 <code>
 webp_l/5.webp: 670 bytes
 webp_l/linux_2.webp: 700 bytes
@@ -275,8 +266,7 @@ webp_l/6.webp: 744 bytes
 Total size: 12532 bytes
 Number of items: 12
 Average size: 1044 bytes
-	</code></pre
-      >
+	</code></pre>
       <h3>WebP Summary</h3>
       <p>
         An additional meaningful improvement with a bare compatibility cost and
@@ -317,8 +307,7 @@ Average size: 1044 bytes
         super high effort mode via <code>cjxl -d 0 -e 11
           --allow_expert_options</code> to see how low we can go:
       </p>
-      <pre
-      >
+      <pre>
 <code>
 jxl_l/11.jxl: 417 bytes
 jxl_l/10.jxl: 2394 bytes
@@ -335,8 +324,7 @@ jxl_l/5.jxl: 590 bytes
 Total size: 14776 bytes
 Number of items: 12
 Average size: 1231 bytes
-	</code></pre
-      >
+	</code></pre>
       <p>...Hm. Not exactly what was promised.</p>
       <p>
         The reality is that JPEG XL's lossless mode is best with larger images,
@@ -358,8 +346,7 @@ Average size: 1231 bytes
         Through adding <code>--modular_lossy_palette
           --modular_palette_colors=0</code>:
       </p>
-      <pre
-      >
+      <pre>
 <code>
 jxl_lossy/11.jxl: 638 bytes
 jxl_lossy/10.jxl: 1677 bytes
@@ -376,8 +363,7 @@ jxl_lossy/5.jxl: 746 bytes
 Total size: 12488 bytes
 Number of items: 12
 Average size: 1040 bytes
-	</code></pre
-      >
+	</code></pre>
       <p>
         This is our best result yet, albeit a lossy one. Visual inpection will
         allow you determine if this is too lossy for you, in which case it may
@@ -390,8 +376,7 @@ Average size: 1040 bytes
         for the codec. However, if you look closely, there are some images that
         are the smallest with JPEG XL...
       </p>
-      <pre
-      >
+      <pre>
 <code>
 jxl_l/11.jxl: 417 bytes
 jxl_l/12.jxl: 279 bytes
@@ -399,8 +384,7 @@ jxl_l/linux_1.jxl: 369 bytes
 jxl_l/3.jxl: 846 bytes
 jxl_l/6.jxl: 773 bytes
 jxl_l/5.jxl: 590 bytes
-	</code></pre
-      >
+	</code></pre>
       <p>
         Exactly half the pictures were smallest with cjxl. The reference library
         for JPEG XL (called libjxl) is still pre-1.0, so maybe the bitstream has
@@ -414,8 +398,7 @@ jxl_l/5.jxl: 590 bytes
         By mixing our favorable results from WebP and JPEG XL, we minify our
         88x31s to the maximum degree:
       </p>
-      <pre
-      >
+      <pre>
 <code>
 mix/11.jxl: 417 bytes
 mix/12.jxl: 279 bytes
@@ -432,8 +415,7 @@ mix/7.webp: 1182 bytes
 Total size: 12316 bytes
 Number of items: 12
 Average size: 1026 bytes
-	</code></pre
-      >
+	</code></pre>
       <p>
         This gives us, with no fidelity loss, our smallest average size yet.
         This is a great result, and it shows that inspecting your outputs with
@@ -450,8 +432,8 @@ Average size: 1026 bytes
         browsers. GIF is supported everywhere, but it's the largest.
       </p>
       <p>
-        APNG encoding with FFmpeg: <code>ffmpeg -y -i {} -plays 0 {.}.apng</code
-        >
+        APNG encoding with FFmpeg: <code>ffmpeg -y -i {} -plays 0
+          {.}.apng</code>
       </p>
       <p>
         Animated WebP encoding with FFmpeg: <code>ffmpeg -y -i {} -pix_fmt bgra
@@ -461,25 +443,21 @@ Average size: 1026 bytes
         Using <a href="https://upallnight.neocities.org/anibanner.gif"
         >this image</a>:
       </p>
-      <pre
-      >
+      <pre>
 <code class="language-bash">
 du -h upallnight.*
 104K	upallnight.apng
 104K	upallnight.gif
 72K	upallnight.webp
-	</code></pre
-      >
+	</code></pre>
       <p>In a bit more detail:</p>
-      <pre
-      >
+      <pre>
 <code class="language-bash">
 stat -f '%z' upallnight.*
 106127  # APNG
 106384  # GIF
 70712   # WebP
-	</code></pre
-      >
+	</code></pre>
       <p>
         I know single image comparisons are flawed, but I've done more than just
         this one and the results are consistent. APNG can often make GIFs a bit
@@ -544,8 +522,7 @@ stat -f '%z' upallnight.*
         unoptimized images anywhere :)
       </p>
       <p>Peer with me:</p>
-      <pre
-      >
+      <pre>
 <code class="language-html">
 &lt;a href="https://giannirosato.com" target="_blank"&gt;
 	&lt;picture&gt;
@@ -553,8 +530,7 @@ stat -f '%z' upallnight.*
 		&lt;img src="https://giannirosato.com/static/images/88x31/gb82_88x31.webp" alt="gianni" width="88" height="31"&gt;
 	&lt;/picture&gt;
 &lt;/a&gt;
-	</code></pre
-      >
+	</code></pre>
 
       <div class="sponsor-widget">
         <a href="https://github.com/gianni-rosato" class="profile-section">
